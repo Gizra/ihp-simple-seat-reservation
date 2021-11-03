@@ -35,5 +35,5 @@ CREATE TABLE reservation_jobs (
     reservation_id UUID NOT NULL
 );
 ALTER TABLE events ADD CONSTRAINT events_ref_venue_id FOREIGN KEY (venue_id) REFERENCES venues (id) ON DELETE NO ACTION;
-ALTER TABLE reservation_jobs ADD CONSTRAINT reservation_jobs_ref_reservation_id FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE NO ACTION;
+ALTER TABLE reservation_jobs ADD CONSTRAINT reservation_jobs_ref_reservation_id FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE CASCADE;
 ALTER TABLE reservations ADD CONSTRAINT reservations_ref_event_id FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE NO ACTION;
