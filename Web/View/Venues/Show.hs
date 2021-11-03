@@ -1,0 +1,66 @@
+module Web.View.Venues.Show where
+import Web.View.Prelude
+
+data ShowView = ShowView
+    { venue :: Venue
+    , events :: [Event]
+    }
+
+instance View ShowView where
+    html ShowView { .. } = [hsx|
+        {breadcrumb}
+        <h1>Venue: {get #title venue}</h1>
+
+        {renderEvents venue events}
+
+    |]
+        where
+            breadcrumb = renderBreadcrumb
+                            [ breadcrumbLink "Venues" VenuesAction
+                            , breadcrumbText "Show Venue"
+                            ]
+
+renderEvents venue events =
+    if null events
+        then [hsx|
+            <div>
+                No Events added to this venue yet.
+                {newButton}
+            </div>
+        |]
+        else [hsx|
+                <h2>Events</h2>
+                {newButton}
+
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Ops</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {forEachWithIndex events (renderEvent (length events))}
+                    </tbody>
+                </table>
+            |]
+    where
+        newButton = [hsx|
+                <div>
+                    <a href={pathTo $ NewEventAction (get #id venue) } class="btn btn-primary">+ Add Event</a>
+                </div>
+        |]
+
+renderEvent totalEvents (index, event) = [hsx|
+        <tr>
+            <td>{totalEvents - index}</td>
+            <td>{get #startTime event |> dateTime}</td>
+            <td>{get #endTime event |> dateTime}</td>
+            <td><a href={ShowEventAction (get #id event)}>Show</a></td>
+        </tr>
+
+
+    |]
