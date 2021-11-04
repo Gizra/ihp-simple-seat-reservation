@@ -11,7 +11,7 @@ instance View NewView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                [ breadcrumbLink "Venues" VenuesAction
+                [ breadcrumbLink "Home" VenuesAction
                 , breadcrumbText "New Venue"
                 ]
 

@@ -10,7 +10,7 @@ data ShowView = ShowView
 instance View ShowView where
     html ShowView { .. } = [hsx|
         {breadcrumb}
-        <h1>Reservation for {get #title event} Event</h1>
+        <h1>Reservations for {get #title event} Event</h1>
 
         <div class="mb-4 mt-4">Time slot: {get #startTime event |> dateTime} - {get #endTime event |> dateTime}</div>
         <div class="mb-4 "><strong>{acceptedReservations}</strong> out of <strong>{get #totalNumberOfSeats venue}</strong> total seats</div>
@@ -19,9 +19,9 @@ instance View ShowView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                            [ breadcrumbLink "Venues" $ VenuesAction
+                            [ breadcrumbLink "Home" $ VenuesAction
                             , breadcrumbLink "Events" $ ShowVenueAction (get #venueId event)
-                            , breadcrumbText "Show Event"
+                            , breadcrumbText $ cs (get #title event)
                             ]
 
             acceptedReservations =

@@ -11,7 +11,7 @@ instance View IndexView where
     html IndexView { .. } = [hsx|
         {breadcrumb}
 
-        <h1>Index<a href={pathTo (NewEventAction venueId)} class="btn btn-primary ml-4">+ New</a></h1>
+        <h1>Index<a href={pathTo (NewEventAction venueId)} class="btn btn-primary">+ New</a></h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>
