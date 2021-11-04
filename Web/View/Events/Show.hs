@@ -42,7 +42,7 @@ instance View ShowView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                            [ breadcrumbLink "Home" $ VenuesAction
+                            [ breadcrumbLink homeIcon $ VenuesAction
                             , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction (get #venueId event)
                             , breadcrumbText $ cs (get #title event)
                             ]

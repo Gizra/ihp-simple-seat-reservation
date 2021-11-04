@@ -11,7 +11,7 @@ instance View EditView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                [ breadcrumbLink "Home" VenuesAction
+                [ breadcrumbLink homeIcon VenuesAction
                 , breadcrumbText "Edit Venue"
                 ]
 

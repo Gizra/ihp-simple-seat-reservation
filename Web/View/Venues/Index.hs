@@ -25,7 +25,7 @@ instance View IndexView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                [ breadcrumbLink "Home" VenuesAction
+                [ breadcrumbLink homeIcon VenuesAction
                 ]
 
 renderVenue :: Venue -> Html
