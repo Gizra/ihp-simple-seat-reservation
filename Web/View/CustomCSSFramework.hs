@@ -39,8 +39,8 @@ customTailwind = def
     , styledBreadcrumbItem
     }
     where
-        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
-        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="my-4 bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="my-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
 
         styledInputClass FormField {} = "border-gray-500 focus:ring-2 focus:ring-blue-600 focus:ring-offset-1 focus:outline-none"
         styledInputInvalidClass _ = "is-invalid"
