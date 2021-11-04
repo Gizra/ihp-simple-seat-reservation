@@ -1,5 +1,6 @@
 module Web.View.Reservations.New where
 import Web.View.Prelude
+import Web.Types (EventsController(ShowEventAction))
 
 data NewView = NewView
     { reservation :: Reservation
@@ -16,7 +17,9 @@ instance View NewView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                [ breadcrumbLink ("Venue opening for " ++ cs (get #title venue)) $ ShowEventAction (get #id event)
+                [ breadcrumbLink "Home" $ VenuesAction
+                , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction (get #venueId event)
+                , breadcrumbLink (cs (get #title event)) $ ShowEventAction (get #id event)
                 , breadcrumbText "New Reservation"
                 ]
 
