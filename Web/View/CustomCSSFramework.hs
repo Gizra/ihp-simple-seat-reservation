@@ -42,15 +42,15 @@ customTailwind = def
         styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
         styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
 
-        styledInputClass FormField {} = "form-control"
+        styledInputClass FormField {} = "border-gray-500 bg-yellow-900"
         styledInputInvalidClass _ = "is-invalid"
 
         styledSubmitButtonClass = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 
         styledFormFieldHelp _ FormField { helpText = "" } = mempty
-        styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs italic">{helpText}</p>|]
+        styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs">{helpText}</p>|]
 
-        styledFormGroupClass = "flex flex-wrap -mx-3 mb-6"
+        styledFormGroupClass = "flex flex-col space-y-4 mb-6"
 
         styledValidationResultClass = "text-red-500 text-xs italic"
 
