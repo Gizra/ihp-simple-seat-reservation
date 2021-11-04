@@ -17,7 +17,7 @@ instance View ShowView where
         where
             breadcrumb = renderBreadcrumb
                             [ breadcrumbLink "Home" VenuesAction
-                            , breadcrumbText "Show Venue"
+                            , breadcrumbText $ cs (get #title venue)
                             ]
 
 renderEvents venue events =
@@ -37,9 +37,9 @@ renderEvents venue events =
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Title</th>
                             <th>Start Time</th>
                             <th>End Time</th>
-                            <th>Ops</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,10 +56,10 @@ renderEvents venue events =
 
 renderEvent totalEvents (index, event) = [hsx|
         <tr>
-            <td>{totalEvents - index}</td>
+            <td>{index + 1}</td>
+            <td><a href={ShowEventAction (get #id event)}>{get #title event}</a></td>
             <td>{get #startTime event |> dateTime}</td>
             <td>{get #endTime event |> dateTime}</td>
-            <td><a href={ShowEventAction (get #id event)}>Show</a></td>
         </tr>
 
 
