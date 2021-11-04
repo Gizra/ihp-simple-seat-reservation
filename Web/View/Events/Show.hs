@@ -27,7 +27,7 @@ instance View ShowView where
 
             <div><strong>{acceptedReservations}</strong> out of <strong>{get #totalNumberOfSeats venue}</strong> total seats</div>
 
-            <div class="flex flex-row space-x-4 text-gray-500 text-sm">
+            <div class="flex flex-row space-x-2 text-gray-500 text-sm">
                 <div>{get #startTime event |> dateTime}</div>
                 <span>—</span>
                 <div>{get #endTime event |> dateTime}</div>
@@ -92,7 +92,7 @@ renderReservationsCard totalReservations reservation = [hsx|
             </div>
 
 
-            <div class="flex flex-row justify-between">
+            <div class="flex flex-row justify-between items-end">
                 <div>{seatContent}</div>
                 <div class="text-red-500 hover:text-red-600 text-sm hover:underline"><a href={DeleteReservationAction (get #id reservation)} class="js-delete text-muted">Delete</a></div>
             </div>
@@ -103,7 +103,7 @@ renderReservationsCard totalReservations reservation = [hsx|
     where seatContent =
                 case get #status reservation of
                     Queued -> [hsx|
-                        <div class="flex flex-row space-x-2">
+                        <div class="flex flex-row space-x-2 items-end">
                             <!-- https://heroicons.com/: clock -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -115,14 +115,14 @@ renderReservationsCard totalReservations reservation = [hsx|
                         </div>
                     |]
                     Accepted -> [hsx|
-                        <div class="flex flex-row space-x-2">
+                        <div class="flex flex-row space-x-2 items-end">
                             <!-- https://heroicons.com/: check-circle -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
 
                             <div class="text-gray-900">
-                                Seat{get #seatNumber reservation}
+                                Seat {get #seatNumber reservation}
                             </div>
 
                         </div>
@@ -130,15 +130,15 @@ renderReservationsCard totalReservations reservation = [hsx|
 
                     |]
                     Rejected -> [hsx|
-                        <div class="flex flex-row space-x-2">
-                         <!-- https://heroicons.com/: x-circle -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                        <div class="flex flex-row space-x-2 items-end">
+                            <!-- https://heroicons.com/: x-circle -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
 
-                        <div class="text-gray-500">
-                            No seat
-                        </div>
+                            <div class="text-gray-500">
+                                No seat
+                            </div>
 
                         </div>
                     |]
