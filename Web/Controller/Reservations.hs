@@ -1,9 +1,7 @@
 module Web.Controller.Reservations where
 
 import Web.Controller.Prelude
-import Web.View.Reservations.Index
 import Web.View.Reservations.New
-import Web.View.Reservations.Edit
 import Web.View.Reservations.Show
 import Web.Mail.Reservations.Confirmation
 import Data.Either (isLeft)
@@ -12,10 +10,6 @@ import Data.Char (isDigit)
 import Data.Foldable (any)
 
 instance Controller ReservationsController where
-    action ReservationsAction {..} = do
-        reservations <- query @Reservation |> fetch
-        event <- fetch eventId
-        render IndexView { .. }
 
     action NewReservationAction {..} = do
         let reservation = newRecord |> set #eventId eventId
@@ -27,24 +21,6 @@ instance Controller ReservationsController where
         reservation <- fetch reservationId
         event <- fetch (get #eventId reservation)
         render ShowView { .. }
-
-    action EditReservationAction { reservationId } = do
-        reservation <- fetch reservationId
-        event <- fetch (get #eventId reservation)
-        render EditView { .. }
-
-    action UpdateReservationAction { reservationId } = do
-        reservation <- fetch reservationId
-        reservation
-            |> buildReservation
-            |> ifValid \case
-                Left reservation -> do
-                    event <- fetch (get #eventId reservation)
-                    render EditView { .. }
-                Right reservation -> do
-                    reservation <- reservation |> updateRecord
-                    setSuccessMessage "Reservation updated"
-                    redirectTo EditReservationAction { .. }
 
     action CreateReservationAction = do
         let reservation = newRecord @Reservation

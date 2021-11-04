@@ -9,15 +9,16 @@ data NewView = NewView
 
 instance View NewView where
     html NewView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={ShowEventAction (get #id event)}>Venue opening for {get #title venue}</a></li>
-                <li class="breadcrumb-item active">New Reservation</li>
-            </ol>
-        </nav>
+        {breadcrumb}
+
         <h1>New Reservation</h1>
         {renderForm reservation}
     |]
+        where
+            breadcrumb = renderBreadcrumb
+                [ breadcrumbLink ("Venue opening for " ++ cs (get #title venue)) $ ShowEventAction (get #id event)
+                , breadcrumbText "New Reservation"
+                ]
 
 renderForm :: Reservation -> Html
 renderForm reservation = formFor reservation [hsx|

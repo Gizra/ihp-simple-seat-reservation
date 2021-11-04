@@ -34,7 +34,5 @@ data ReservationsController
     | NewReservationAction  {eventId :: !(Id Event)}
     | ShowReservationAction { reservationId :: !(Id Reservation) }
     | CreateReservationAction
-    | EditReservationAction { reservationId :: !(Id Reservation) }
-    | UpdateReservationAction { reservationId :: !(Id Reservation) }
     | DeleteReservationAction { reservationId :: !(Id Reservation) }
     deriving (Eq, Show, Data)
