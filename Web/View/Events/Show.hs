@@ -70,7 +70,7 @@ renderReservation totalReservations (index, reservation) = [hsx|
             <td>{seatContent}</td>
             <td>{get #personIdentifier reservation}</td>
             <td>{get #status reservation}</td>
-            <td><td><a href={DeleteReservationAction (get #id reservation)} class="js-delete text-muted">Delete</a></td></td>
+            <td><a href={DeleteReservationAction (get #id reservation)} class="js-delete text-muted">Delete</a></td>
         </tr>
 
     |]
