@@ -20,3 +20,5 @@ Config/client_session_key.aes
 
 # Ignore locally checked out IHP version
 IHP
+
+static/app.css

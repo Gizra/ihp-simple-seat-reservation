@@ -25,5 +25,8 @@ eval "$(direnv export bash)"
 # You can define custom env vars here:
 # export CUSTOM_ENV_VAR=".."
 
+# Run TW in the background
+make tailwind-dev &
+
 # Finally start the dev server
 RunDevServer

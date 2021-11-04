@@ -23,7 +23,7 @@ instance Controller EventsController where
         venue <- fetch venueId
         render NewView { .. }
 
-    action ShowEventAction { eventId } = do
+    action ShowEventAction { eventId } = autoRefresh do
         event <- fetch eventId
         venue <- fetch (get #venueId event)
         reservations <- query @Reservation

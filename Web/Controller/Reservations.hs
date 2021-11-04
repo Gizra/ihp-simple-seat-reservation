@@ -50,7 +50,7 @@ instance Controller ReservationsController where
         let reservation = newRecord @Reservation
         reservation
             |> buildReservation
-            |> validatepersonIdentifier
+            |> validatePersonIdentifier
             |> ifValid \case
                 Left reservation -> do
                     event <- fetch (get #eventId reservation)
@@ -78,7 +78,7 @@ instance Controller ReservationsController where
 buildReservation reservation = reservation
     |> fill @["eventId","seatNumber","personIdentifier"]
 
-validatepersonIdentifier reservation =
+validatePersonIdentifier reservation =
     if isLeft (personIdentifierResult $ get #personIdentifier reservation)
         then reservation |> attachFailure #personIdentifier "Person ID is not valid"
         else reservation

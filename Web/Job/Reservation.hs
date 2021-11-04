@@ -9,7 +9,8 @@ import Data.Set (fromList, toList, delete)
 
 instance Job ReservationJob where
     perform ReservationJob { .. } = do
-        -- threadDelay (2 * 1000000)
+        -- threadDelay (5 * 1000000)
+
         reservation <- fetch reservationId
         event <- fetch (get #eventId reservation)
         venue <- fetch (get #venueId event)
@@ -25,7 +26,7 @@ instance Job ReservationJob where
             |> fetch
 
         reservation
-            |> validatepersonIdentifier
+            |> validatePersonIdentifier
             |> assignSeatNumber venue otherReservations
             |> ifValid \case
                 Left reservation -> do
