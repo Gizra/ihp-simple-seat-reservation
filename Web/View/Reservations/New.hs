@@ -11,7 +11,7 @@ instance View NewView where
     html NewView { .. } = [hsx|
         {breadcrumb}
 
-        <h1>New Reservation</h1>
+        <h1 class="text-3xl">New Reservation</h1>
         {renderForm reservation}
     |]
         where
