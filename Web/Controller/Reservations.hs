@@ -20,6 +20,7 @@ instance Controller ReservationsController where
     action ShowReservationAction { reservationId } = do
         reservation <- fetch reservationId
         event <- fetch (get #eventId reservation)
+        venue <- fetch (get #venueId event)
         render ShowView { .. }
 
     action CreateReservationAction = do
