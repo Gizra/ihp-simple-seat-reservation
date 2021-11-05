@@ -70,7 +70,9 @@ instance View ShowView where
 
             baseUrl = getConfig |> get #baseUrl
 
-            copyPasteCode = "time seq 20 | parallel -n0 \"curl '" ++ baseUrl ++ "/CreateReservation' -H 'content-type: application/x-www-form-urlencoded' --data-raw 'eventId=eca8da2a-8748-483f-97ba-4dcbad6cf5e5&personIdentifier=1234' --compressed\"" :: Text
+            eventId = show $ get #id event :: Text
+
+            copyPasteCode = "time seq 20 | parallel -n0 \"curl '" ++ baseUrl ++ "/CreateReservation' -H 'content-type: application/x-www-form-urlencoded' --data-raw 'eventId=" ++ eventId ++ "&personIdentifier=1234' --compressed\"" :: Text
 
 
 renderReservations event reservations =
@@ -91,25 +93,32 @@ renderReservations event reservations =
                 |]
                 else [hsx|
                     <div class="flex flex-col space-y-2">
-                    {forEach reservations (renderReservationsCard totalReservations)}
+                    {forEachWithIndex reservations (renderReservationsCard totalReservations)}
                     </div>
                 |]
                         where totalReservations = length reservations
 
 
 
-renderReservationsCard totalReservations reservation = [hsx|
+renderReservationsCard totalReservations (index, reservation) = [hsx|
         <div class="border border-gray-300 px-6 py-4 rounded hover:bg-gray-100 flex flex-col space-y-4">
-            <div class="flex flex-row space-x-2">
-                <!-- https://heroicons.com/: identification -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-                </svg>
-                <div class="text-gray-700">
-                    {get #personIdentifier reservation}
+
+            <div class="flex flex-row justify-between items-center">
+
+                <div class="flex flex-row space-x-2">
+                    <!-- https://heroicons.com/: identification -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                    </svg>
+                    <div class="text-gray-700">
+                        {get #personIdentifier reservation}
+                    </div>
+
                 </div>
 
+                <div class="text-sm text-gray-400">#{totalReservations - index}</div>
             </div>
+
 
 
             <div class="flex flex-row justify-between items-end">
