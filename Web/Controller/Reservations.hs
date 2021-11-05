@@ -52,7 +52,7 @@ instance Controller ReservationsController where
         redirectTo $ ShowEventAction (get #eventId reservation)
 
 buildReservation reservation = reservation
-    |> fill @["eventId","seatNumber","personIdentifier"]
+    |> fill @["eventId","seatNumber","personIdentifier", "delay"]
 
 validatePersonIdentifier reservation =
     if isLeft (personIdentifierResult $ get #personIdentifier reservation)

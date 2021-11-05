@@ -33,14 +33,6 @@ ALTER TABLE public.events ENABLE TRIGGER ALL;
 ALTER TABLE public.reservations DISABLE TRIGGER ALL;
 
 
-
-ALTER TABLE public.reservations ENABLE TRIGGER ALL;
-
-
-ALTER TABLE public.reservation_jobs DISABLE TRIGGER ALL;
-
-
-
 ALTER TABLE public.reservation_jobs ENABLE TRIGGER ALL;
 
 

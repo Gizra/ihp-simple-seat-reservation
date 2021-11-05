@@ -9,9 +9,12 @@ import Data.Set (fromList, toList, delete)
 
 instance Job ReservationJob where
     perform ReservationJob { .. } = do
-        -- threadDelay (5 * 1000000)
-
         reservation <- fetch reservationId
+
+        -- Delay the job for a few seconds to give the user time to
+        -- see the status change.
+        when (get #delay reservation) (threadDelay (5 * 1000000))
+
         event <- fetch (get #eventId reservation)
         venue <- fetch (get #venueId event)
 

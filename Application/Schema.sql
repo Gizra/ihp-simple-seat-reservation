@@ -20,7 +20,8 @@ CREATE TABLE reservations (
     event_id UUID NOT NULL,
     seat_number INT NOT NULL,
     person_identifier TEXT NOT NULL,
-    status reservation_status NOT NULL
+    status reservation_status NOT NULL,
+    delay BOOLEAN DEFAULT false NOT NULL
 );
 CREATE TABLE reservation_jobs (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
