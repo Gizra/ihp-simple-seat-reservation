@@ -8,6 +8,13 @@ data ShowView = ShowView
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
-        <h1>Show Reservation</h1>
-        <p>{reservation}</p>
+        {breadcrumb}
+        <h1 class="text-3xl">Reservation Details</h1>
+        <div>#{get #personIdentifier reservation}</div>
     |]
+        where
+            breadcrumb = renderBreadcrumb
+                [ breadcrumbLink homeIcon VenuesAction
+                , breadcrumbLink (cs (get #title event)) $ ShowEventAction (get #id event)
+                , breadcrumbText "Reservation Details"
+                ]
