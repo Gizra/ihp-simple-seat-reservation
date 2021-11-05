@@ -30,8 +30,7 @@ data EventsController
     deriving (Eq, Show, Data)
 
 data ReservationsController
-    = ReservationsAction  {eventId :: !(Id Event)}
-    | NewReservationAction  {eventId :: !(Id Event)}
+    = NewReservationAction  {eventId :: !(Id Event)}
     | ShowReservationAction { reservationId :: !(Id Reservation) }
     | CreateReservationAction
     | DeleteReservationAction { reservationId :: !(Id Reservation) }
