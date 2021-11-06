@@ -1,0 +1,27 @@
+image:
+  file: .gitpod.Dockerfile
+
+ports:
+  # IHP Server
+  - port: 8001
+    onOpen: open-browser
+  # IDE
+  - port: 8001
+    onOpen: open-browser
+  # Live Reloading
+  - port: 8002
+    onOpen: ignore
+
+tasks:
+  - init: >
+      ( if [ ! -e "Main.hs" ]; then git init; git remote add ihp https://github.com/digitallyinduced/ihp-boilerplate.git; git pull ihp gitpod --rebase; nix-shell -j auto --cores 0 --quiet --run 'make -s all .envrc; new-application Web'; fi) && nix-shell -j auto --cores 0 --run 'make -s all .envrc' && direnv allow
+    command: >
+      export IHP_BASEURL=`gp url 8000`;
+      export IHP_IDE_BASEURL=`gp url 8001`;
+      ./start
+
+vscode:
+  extensions:
+    - haskell.haskell
+    - s0kil.vscode-hsx
+    - arrterian.nix-env-selector
