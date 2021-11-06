@@ -13,7 +13,7 @@ instance Job ReservationJob where
 
         -- Delay the job for a few seconds to give the user time to
         -- see the status change.
-        when (get #delay reservation) (threadDelay (5 * 1000000))
+        when (get #delay reservation) (threadDelay (2 * 1000000))
 
         event <- fetch (get #eventId reservation)
         venue <- fetch (get #venueId event)

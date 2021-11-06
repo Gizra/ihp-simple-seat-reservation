@@ -70,4 +70,4 @@ instance Controller EventsController where
         redirectTo VenuesAction
 
 buildEvent event = event
-    |> fill @'["venueId", "title"]
+    |> fill @'["venueId", "title", "startTime", "endTime"]
