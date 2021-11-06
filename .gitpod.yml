@@ -5,12 +5,10 @@ ports:
   # IHP Server
   - port: 8001
     onOpen: open-browser
+    visibility: public
   # IDE
   - port: 8001
     onOpen: open-browser
-  # Live Reloading
-  - port: 8002
-    onOpen: ignore
 
 tasks:
   - init: >
