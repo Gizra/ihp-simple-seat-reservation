@@ -3,7 +3,7 @@ image:
 
 ports:
   # IHP Server
-  - port: 8001
+  - port: 8000
     onOpen: open-browser
     visibility: public
   # IDE
