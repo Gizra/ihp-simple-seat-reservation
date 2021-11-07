@@ -7,13 +7,18 @@ instance View IndexView where
     html IndexView { .. } = [hsx|
         {breadcrumb}
 
-        <h1>Index<a href={pathTo NewVenueAction} class="btn btn-primary">+ New</a></h1>
-        <div class="table-responsive">
+        <div class="flex flex-col space-y-6 mb-12">
+            <h1 class="text-3xl">Venues</h1>
+            <div>
+                <a href={pathTo NewVenueAction} class="btn btn-primary inline-block">+ Add Venue</a>
+            </div>
+        </div>
+        <div>
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class={thClasses}>Venue</th>
-                        <th class={thClasses}>Ops</th>
+                        <th class={tableThClasses}>Venue</th>
+                        <th class={tableThClasses}>Ops</th>
                     </tr>
                 </thead>
                 <tbody>{forEach venues renderVenue}</tbody>
@@ -26,18 +31,13 @@ instance View IndexView where
                 [ breadcrumbLink homeIcon VenuesAction
                 ]
 
-            thClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" :: Text
 
 renderVenue :: Venue -> Html
 renderVenue venue = [hsx|
     <tr>
-        <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
-        <td class={tdClassesWithSeparator}>
-            <a href={EditVenueAction (get #id venue)} class="hover:underline">Edit</a>
-            <a href={DeleteVenueAction (get #id venue)} class="js-delete pl-2 hover:underline">Delete</a>
+        <td><a class={linkClass} href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <a href={EditVenueAction (get #id venue)} class={linkClass}>Edit</a>
         </td>
     </tr>
 |]
-    where
-        tdClasses = "px-6 py-4 whitespace-nowrap text-sm font-medium" :: Text
-        tdClassesWithSeparator = classes ["flex flex-row space-x-2 divide-x divide-gray-200 text-blue-400", (tdClasses, True)]
