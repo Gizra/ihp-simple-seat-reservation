@@ -31,13 +31,13 @@ instance View IndexView where
 renderVenue :: Venue -> Html
 renderVenue venue = [hsx|
     <tr>
-        <td class={tdClasses}><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
+        <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
         <td class={tdClassesWithSeparator}>
-            <a href={EditVenueAction (get #id venue)} class="text-muted">Edit</a>
-            <a href={DeleteVenueAction (get #id venue)} class="js-delete text-muted">Delete</a>
+            <a href={EditVenueAction (get #id venue)} class="hover:underline">Edit</a>
+            <a href={DeleteVenueAction (get #id venue)} class="js-delete pl-2 hover:underline">Delete</a>
         </td>
     </tr>
 |]
     where
-        tdClasses = "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" :: Text
-        tdClassesWithSeparator = classes ["flex flex-row space-x-2", (tdClasses, True)]
+        tdClasses = "px-6 py-4 whitespace-nowrap text-sm font-medium" :: Text
+        tdClassesWithSeparator = classes ["flex flex-row space-x-2 divide-x divide-gray-200 text-blue-400", (tdClasses, True)]
