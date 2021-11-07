@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind components;
+
 @tailwind utilities;
 
 @layer components {
@@ -10,9 +11,10 @@
 
 @layer base {
     h1 {
-      @apply text-3xl;
+        @apply text-3xl;
     }
     h2 {
-      @apply text-2xl;
+        @apply text-2xl;
     }
-  }
+}
+
