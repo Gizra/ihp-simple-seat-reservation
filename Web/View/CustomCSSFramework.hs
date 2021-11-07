@@ -188,7 +188,7 @@ customTailwind = def
         styledBreadcrumb :: CSSFramework -> [BreadcrumbItem]-> BreadcrumbsView -> Blaze.Html
         styledBreadcrumb _ _ breadcrumbsView = [hsx|
             <nav class="breadcrumbs bg-gray-100 py-4 px-6 rounded my-4" aria-label="Breadcrumb">
-                <ol class="flex items-center space-x-2" role="list">
+                <ol class="h-4 flex items-center space-x-2" role="list">
                     {get #breadcrumbItems breadcrumbsView}
                 </ol>
             </nav>
