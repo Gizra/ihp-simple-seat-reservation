@@ -57,7 +57,7 @@ renderEvents venue events =
 renderEvent totalEvents (index, event) = [hsx|
         <tr>
             <td>{index + 1}</td>
-            <td><a href={ShowEventAction (get #id event)}>{get #title event}</a></td>
+            <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowEventAction (get #id event)}>{get #title event}</a></td>
             <td>{get #startTime event |> dateTime}</td>
             <td>{get #endTime event |> dateTime}</td>
         </tr>

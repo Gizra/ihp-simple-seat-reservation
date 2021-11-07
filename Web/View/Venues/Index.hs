@@ -15,7 +15,6 @@ instance View IndexView where
                         <th>Venue</th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>{forEach venues renderVenue}</tbody>
@@ -31,8 +30,7 @@ instance View IndexView where
 renderVenue :: Venue -> Html
 renderVenue venue = [hsx|
     <tr>
-        <td>{venue}</td>
-        <td><a href={ShowVenueAction (get #id venue)}>Show</a></td>
+        <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
         <td><a href={EditVenueAction (get #id venue)} class="text-muted">Edit</a></td>
         <td><a href={DeleteVenueAction (get #id venue)} class="js-delete text-muted">Delete</a></td>
     </tr>
