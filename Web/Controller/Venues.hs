@@ -50,7 +50,7 @@ instance Controller VenuesController where
                 Right venue -> do
                     venue <- venue |> createRecord
                     setSuccessMessage "Venue created"
-                    redirectTo VenuesAction
+                    redirectTo $ ShowVenueAction (get #id venue)
 
     action DeleteVenueAction { venueId } = do
         venue <- fetch venueId

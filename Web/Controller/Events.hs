@@ -61,7 +61,7 @@ instance Controller EventsController where
                 Right event -> do
                     event <- event |> createRecord
                     setSuccessMessage "Event created"
-                    redirectTo $ EventsAction (get #venueId event)
+                    redirectTo $ ShowEventAction (get #id event)
 
     action DeleteEventAction { eventId } = do
         event <- fetch eventId
