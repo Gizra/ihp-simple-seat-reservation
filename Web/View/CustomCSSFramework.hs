@@ -94,19 +94,14 @@ customTailwind = def
                         {nextMobileOnly}
                     </div>
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                        <div class="text-sm text-gray-700">
-                            <select class="px-4 py-3" id="maxItemsSelect" onchange="window.location.href = this.options[this.selectedIndex].dataset.url">
-                                {get #itemsPerPageSelector paginationView}
-                            </select>
-                        </div>
                         <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            {get #linkPrevious paginationView}
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                {get #linkPrevious paginationView}
 
-                            {get #pageDotDotItems paginationView}
+                                {get #pageDotDotItems paginationView}
 
-                            {get #linkNext paginationView}
-                        </nav>
+                                {get #linkNext paginationView}
+                            </nav>
                         </div>
                     </div>
                 </div>

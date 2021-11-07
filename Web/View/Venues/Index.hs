@@ -7,14 +7,18 @@ instance View IndexView where
     html IndexView { .. } = [hsx|
         {breadcrumb}
 
-        <h1>Index<a href={pathTo NewVenueAction} class="btn btn-primary">+ New</a></h1>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
+        <div class="flex flex-col space-y-6 mb-12">
+            <h1 class="text-3xl">Venues</h1>
+            <div>
+                <a href={pathTo NewVenueAction} class="btn btn-primary inline-block">+ Add Venue</a>
+            </div>
+        </div>
+        <div>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
                     <tr>
-                        <th>Venue</th>
-                        <th></th>
-                        <th></th>
+                        <th class={tableThClasses}>Venue</th>
+                        <th class={tableThClasses}>Ops</th>
                     </tr>
                 </thead>
                 <tbody>{forEach venues renderVenue}</tbody>
@@ -27,11 +31,13 @@ instance View IndexView where
                 [ breadcrumbLink homeIcon VenuesAction
                 ]
 
+
 renderVenue :: Venue -> Html
 renderVenue venue = [hsx|
     <tr>
-        <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
-        <td><a href={EditVenueAction (get #id venue)} class="text-muted">Edit</a></td>
-        <td><a href={DeleteVenueAction (get #id venue)} class="js-delete text-muted">Delete</a></td>
+        <td class={tableTdClasses}><a class={linkClass} href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
+        <td class={tableTdClasses}>
+            <a href={EditVenueAction (get #id venue)} class={linkClass}>Edit</a>
+        </td>
     </tr>
 |]

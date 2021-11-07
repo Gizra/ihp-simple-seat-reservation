@@ -798,6 +798,11 @@ select {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
+.btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
+}
+
 .btn:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -880,6 +885,10 @@ select {
   margin-top: 2rem;
 }
 
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -934,6 +943,10 @@ select {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.min-w-full {
+  min-width: 100%;
 }
 
 .max-w-3xl {
@@ -1004,6 +1017,21 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
+.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded {
@@ -1159,6 +1187,10 @@ select {
   padding-right: 1.5rem;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -1178,8 +1210,16 @@ select {
   font-weight: 500;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .italic {
   font-style: italic;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
 }
 
 .text-green-900 {
@@ -1217,6 +1257,11 @@ select {
   color: rgba(79, 70, 229, var(--tw-text-opacity));
 }
 
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
 .text-yellow-800 {
   --tw-text-opacity: 1;
   color: rgba(146, 64, 14, var(--tw-text-opacity));
@@ -1240,11 +1285,6 @@ select {
 .text-red-400 {
   --tw-text-opacity: 1;
   color: rgba(248, 113, 113, var(--tw-text-opacity));
-}
-
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgba(59, 130, 246, var(--tw-text-opacity));
 }
 
 .shadow-sm {
@@ -1276,6 +1316,11 @@ select {
   color: rgba(55, 65, 81, var(--tw-text-opacity));
 }
 
+.hover\:text-blue-600:hover {
+  --tw-text-opacity: 1;
+  color: rgba(37, 99, 235, var(--tw-text-opacity));
+}
+
 .hover\:text-red-600:hover {
   --tw-text-opacity: 1;
   color: rgba(220, 38, 38, var(--tw-text-opacity));
@@ -1284,11 +1329,6 @@ select {
 .hover\:text-gray-500:hover {
   --tw-text-opacity: 1;
   color: rgba(107, 114, 128, var(--tw-text-opacity));
-}
-
-.hover\:text-blue-600:hover {
-  --tw-text-opacity: 1;
-  color: rgba(37, 99, 235, var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {

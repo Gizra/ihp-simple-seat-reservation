@@ -9,7 +9,14 @@ data ShowView = ShowView
 instance View ShowView where
     html ShowView { .. } = [hsx|
         {breadcrumb}
-        <h1>Venue: {get #title venue}</h1>
+
+        <div class="flex flex-col space-y-6 mb-12">
+            <h1 class="text-3xl">{get #title venue}'s Events</h1>
+
+            <div>
+                <a href={pathTo $ NewEventAction (get #id venue) } class="btn btn-primary">+ Add Event</a>
+            </div>
+        </div>
 
         {renderEvents venue events}
 
@@ -25,41 +32,30 @@ renderEvents venue events =
         then [hsx|
             <div>
                 No Events added to this venue yet.
-                {newButton}
             </div>
         |]
         else [hsx|
-                <h2>Events</h2>
-                {newButton}
-
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {forEachWithIndex events (renderEvent (length events))}
-                    </tbody>
-                </table>
-            |]
-    where
-        newButton = [hsx|
-                <div>
-                    <a href={pathTo $ NewEventAction (get #id venue) } class="btn btn-primary">+ Add Event</a>
-                </div>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class={tableThClasses}>Title</th>
+                        <th class={tableThClasses}>Start Time</th>
+                        <th class={tableThClasses}>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {forEach events (renderEvent (length events))}
+                </tbody>
+            </table>
         |]
+    where
 
-renderEvent totalEvents (index, event) = [hsx|
+renderEvent :: Int -> Event -> Html
+renderEvent totalEvents event = [hsx|
         <tr>
-            <td>{index + 1}</td>
-            <td><a class="text-blue-500 hover:text-blue-600 hover:underline" href={ShowEventAction (get #id event)}>{get #title event}</a></td>
-            <td>{get #startTime event |> dateTime}</td>
-            <td>{get #endTime event |> dateTime}</td>
+            <td class={tableTdClasses}><a class={linkClass} href={ShowEventAction (get #id event)}>{get #title event}</a></td>
+            <td class={tableTdClasses}>{get #startTime event |> dateTime}</td>
+            <td class={tableTdClasses}>{get #endTime event |> dateTime}</td>
         </tr>
 
 

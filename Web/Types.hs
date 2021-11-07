@@ -20,8 +20,7 @@ data VenuesController
     deriving (Eq, Show, Data)
 
 data EventsController
-    = EventsAction { venueId :: !(Id Venue) }
-    | NewEventAction { venueId :: !(Id Venue) }
+    = NewEventAction { venueId :: !(Id Venue) }
     | ShowEventAction { eventId :: !(Id Event) }
     | CreateEventAction
     | EditEventAction { eventId :: !(Id Event) }

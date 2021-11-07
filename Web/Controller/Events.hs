@@ -1,17 +1,11 @@
 module Web.Controller.Events where
 
 import Web.Controller.Prelude
-import Web.View.Events.Index
 import Web.View.Events.New
 import Web.View.Events.Edit
 import Web.View.Events.Show
 
 instance Controller EventsController where
-    action EventsAction { venueId } = do
-        (eventsQ, pagination) <- query @Event |> filterWhere (#venueId, venueId) |> paginate
-        events <- eventsQ |> fetch
-        render IndexView { .. }
-
     action NewEventAction { venueId } = do
         current <- getCurrentTime
         let event = newRecord
