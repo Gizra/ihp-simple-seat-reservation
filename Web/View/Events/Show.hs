@@ -39,7 +39,7 @@ instance View ShowView where
             </div>
         </div>
 
-        <h1 class="text-3xl">Reservations for {get #title event} Event</h1>
+        <h1>Reservations for {get #title event} Event</h1>
 
         <div class="flex flex-col space-y-2 sm:flex-row justify-between mt-6 mb-8 items-baseline">
 

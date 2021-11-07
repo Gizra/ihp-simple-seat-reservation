@@ -8,7 +8,7 @@ instance View IndexView where
         {breadcrumb}
 
         <div class="flex flex-col space-y-6 mb-12">
-            <h1 class="text-3xl">Venues</h1>
+            <h1>Venues</h1>
             <div>
                 <a href={pathTo NewVenueAction} class="btn btn-primary inline-block">+ Add Venue</a>
             </div>

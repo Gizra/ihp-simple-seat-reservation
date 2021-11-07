@@ -50,7 +50,7 @@ customTailwind = def
         styledFormFieldHelp _ FormField { helpText = "" } = mempty
         styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs">{helpText}</p>|]
 
-        styledFormGroupClass = "flex flex-col space-y-4 mb-6"
+        styledFormGroupClass = "flex flex-col space-y-4 my-4"
 
         styledValidationResultClass = "text-red-500 text-xs italic"
 

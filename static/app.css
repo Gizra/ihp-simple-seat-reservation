@@ -786,6 +786,16 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .btn {
   border-radius: 0.25rem;
   --tw-bg-opacity: 1;
@@ -796,6 +806,11 @@ select {
   padding-bottom: 0.5rem;
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
 }
 
 .btn:focus {
@@ -1194,11 +1209,6 @@ select {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
 }
 
 .font-medium {

@@ -11,7 +11,7 @@ instance View ShowView where
         {breadcrumb}
 
         <div class="flex flex-col space-y-6 mb-12">
-            <h1 class="text-3xl">{get #title venue}'s Events</h1>
+            <h1>{get #title venue}'s Events</h1>
 
             <div>
                 <a href={pathTo $ NewEventAction (get #id venue) } class="btn btn-primary">+ Add Event</a>

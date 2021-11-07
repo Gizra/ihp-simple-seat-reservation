@@ -11,7 +11,7 @@ data ShowView = ShowView
 instance View ShowView where
     html ShowView { .. } = [hsx|
         {breadcrumb}
-        <h1 class="text-3xl">Reservation Details</h1>
+        <h1>Reservation Details</h1>
 
         <div class="mt-8">
             {renderReservationsCard Nothing reservation}
