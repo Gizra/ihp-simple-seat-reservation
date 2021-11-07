@@ -16,6 +16,8 @@ let
         otherDeps = p: with p; [
             # Native dependencies, e.g. imagemagick
             nodejs
+            # For testing concurrent requests.
+            parallel
         ];
         projectPath = ./.;
     };
