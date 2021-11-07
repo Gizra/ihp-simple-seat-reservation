@@ -6,6 +6,7 @@ module Web.View.Prelude
 , module Application.Helper.View
 , homeIcon
 , linkClass
+, tableTdClasses
 , tableThClasses
 ) where
 
@@ -26,6 +27,10 @@ homeIcon = [hsx|
 {-| Classes of a simple link.
 -}
 linkClass = "text-blue-500 hover:text-blue-600 hover:underline"
+
+{-| Classes of a table data.
+-}
+tableTdClasses = "px-6 py-4 whitespace-nowrap text-sm font-medium"
 
 {-| Classes of a table header row.
 -}
