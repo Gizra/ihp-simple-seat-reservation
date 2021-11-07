@@ -48,7 +48,7 @@ instance Job ReservationJob where
 
 
                     -- Don't delay the job for sending an email.
-                    -- forkIO $ sendMail ConfirmationMail{..}
+                    forkIO $ sendMail ConfirmationMail{..}
 
                     pure ()
 
