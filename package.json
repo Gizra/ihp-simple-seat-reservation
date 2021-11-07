@@ -1,0 +1,33 @@
+{
+  "name": "ihp-simple-seat-reservation",
+  "version": "1.0.0",
+  "description": "After following the steps to install [IHP](https://ihp.digitallyinduced.com/Guide/installation.html), you can run this app locally by running:",
+  "main": "index.js",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.3.4",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^5.0.9",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.1",
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-scss": "^4.0.2",
+    "postcss-strip-inline-comments": "^0.1.5",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gizra/ihp-simple-seat-reservation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gizra/ihp-simple-seat-reservation/issues"
+  },
+  "homepage": "https://github.com/Gizra/ihp-simple-seat-reservation#readme"
+}
