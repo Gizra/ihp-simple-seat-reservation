@@ -798,11 +798,6 @@ select {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
-.btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
-}
-
 .btn:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;

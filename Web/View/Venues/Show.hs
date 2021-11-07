@@ -30,7 +30,7 @@ instance View ShowView where
 renderEvents venue events =
     if null events
         then [hsx|
-            <div>
+            <div class="text-gray-500">
                 No Events added to this venue yet.
             </div>
         |]
