@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 
-@tailwind utilities;
+
+.form-check-input {
+    @apply mr-2;
+}
 
 @layer components {
     .btn {
@@ -10,6 +13,7 @@
 }
 
 @layer base {
+
     h1 {
         @apply text-3xl;
     }
@@ -17,4 +21,6 @@
         @apply text-2xl;
     }
 }
+
+@tailwind utilities;
 

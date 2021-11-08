@@ -824,6 +824,10 @@ h2 {
   --tw-ring-offset-width: 2px;
 }
 
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
