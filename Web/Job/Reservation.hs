@@ -28,31 +28,25 @@ instance Job ReservationJob where
             |> filterWhere (#status, Accepted)
             |> fetch
 
-        reservation
+        reservation <- reservation
             |> validatePersonIdentifier
             |> assignSeatNumber venue otherReservations
             |> ifValid \case
                 Left reservation -> do
-
-                    reservation <- reservation
+                    reservation
                         |> set #status Rejected
                         |> updateRecord
 
-
-                    pure ()
                 Right reservation -> do
-                    reservation <-
-                        reservation
-                            |> set #status Accepted
-                            |> updateRecord
+                    reservation
+                        |> set #status Accepted
+                        |> updateRecord
 
-
-                    -- Don't delay the job for sending an email.
-                    async $ sendMail ConfirmationMail{..}
-
-                    pure ()
+        -- Don't delay the job for sending an email.
+        async $ sendMail ConfirmationMail{..}
 
         pure ()
+
 
     maxAttempts = 1
 

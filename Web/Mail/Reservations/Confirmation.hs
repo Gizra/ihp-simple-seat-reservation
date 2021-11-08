@@ -10,7 +10,7 @@ data ConfirmationMail = ConfirmationMail
 
 instance BuildMail ConfirmationMail where
     subject = status |> \case
-            Accepted -> "Reservation Accepted"
+            Accepted -> "Reservation Accepted (Seat " ++ show (get #seatNumber reservation) ++ ")"
             Rejected -> "Reservation Rejected"
             _ -> ""
         where
@@ -22,7 +22,8 @@ instance BuildMail ConfirmationMail where
     html ConfirmationMail { .. } = [hsx|
         Hello Person (#{get #personIdentifier reservation}),
 
-        Your reservation for venue "{get #title venue}" is now <strong>{get #status reservation}</strong>
-
-        See <a href={ShowReservationAction (get #id reservation)}>Reservation</a>
+        <p>
+            Your reservation for venue "{get #title venue}" is now <strong>{get #status reservation}</strong>
+            See <a href={urlTo $ ShowReservationAction (get #id reservation)}>Reservation</a>
+        </p>
     |]
