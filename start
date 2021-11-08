@@ -26,7 +26,7 @@ eval "$(direnv export bash)"
 # export CUSTOM_ENV_VAR=".."
 
 # Run TW in the background
-RunDevServer
+make tailwind-dev & RunDevServer
 # Finally start the dev server
 
 
