@@ -40,7 +40,7 @@ instance Controller VenuesController where
                 Right venue -> do
                     venue <- venue |> updateRecord
                     setSuccessMessage "Venue updated"
-                    redirectTo EditVenueAction { .. }
+                    redirectTo ShowVenueAction { .. }
 
     action CreateVenueAction = do
         let venue = newRecord @Venue

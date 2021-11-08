@@ -25,8 +25,7 @@ eval "$(direnv export bash)"
 # You can define custom env vars here:
 # export CUSTOM_ENV_VAR=".."
 
-# Run TW in the background
-RunDevServer
 # Finally start the dev server
+RunDevServer
 
 
