@@ -5,6 +5,7 @@ import Web.View.Venues.Index
 import Web.View.Venues.New
 import Web.View.Venues.Edit
 import Web.View.Venues.Show
+import Web.Controller.Prelude (Venue'(totalNumberOfSeats))
 
 instance Controller VenuesController where
     action VenuesAction = do
@@ -13,7 +14,7 @@ instance Controller VenuesController where
         render IndexView { .. }
 
     action NewVenueAction = do
-        let venue = newRecord
+        let venue = newRecord |> set #totalNumberOfSeats 50
         render NewView { .. }
 
     action ShowVenueAction { venueId } = do

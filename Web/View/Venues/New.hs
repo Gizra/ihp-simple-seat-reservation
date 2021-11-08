@@ -18,7 +18,7 @@ instance View NewView where
 renderForm :: Venue -> Html
 renderForm venue = formFor venue [hsx|
     {(textField #title)}
-    {(textField #totalNumberOfSeats)}
+    {(numberField #totalNumberOfSeats)}
     {submitButton}
 
 |]
