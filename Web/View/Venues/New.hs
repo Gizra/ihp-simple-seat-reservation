@@ -1,5 +1,7 @@
 module Web.View.Venues.New where
 import Web.View.Prelude
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
 
 data NewView = NewView { venue :: Venue }
 
@@ -18,7 +20,7 @@ instance View NewView where
 renderForm :: Venue -> Html
 renderForm venue = formFor venue [hsx|
     {(textField #title)}
-    {(numberField #totalNumberOfSeats)}
+    {(numberField #totalNumberOfSeats) { fieldInput = (\fieldInput -> H.input ! A.min "1") } }
     {submitButton}
 
 |]
