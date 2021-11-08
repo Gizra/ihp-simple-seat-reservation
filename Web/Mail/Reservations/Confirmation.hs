@@ -9,7 +9,14 @@ data ConfirmationMail = ConfirmationMail
     }
 
 instance BuildMail ConfirmationMail where
-    subject = "Subject"
+    subject = status |> \case
+            Accepted -> "Reservation Accepted"
+            Rejected -> "Reservation Rejected"
+            _ -> ""
+        where
+            reservation = get #reservation ?mail
+            status = get #status reservation
+
     to ConfirmationMail { .. } = Address { addressName = Just "Firstname Lastname", addressEmail = "fname.lname@example.com" }
     from = "hi@example.com"
     html ConfirmationMail { .. } = [hsx|
