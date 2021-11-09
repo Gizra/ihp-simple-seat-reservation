@@ -64,12 +64,12 @@ validatePersonIdentifier reservation =
 
 {-| Error messages are handy for debugging and testing. The user should not see them.
 -}
-personIdentifierResult :: Text -> Either Text Text
+personIdentifierResult :: Text -> Either Text ()
 personIdentifierResult val =
     let
-        rightVal = Right val
+        rightVal = Right ()
     in
     rightVal
-        >>= (\val ->  if "0000" `isPrefixOf` val then Left "Prefix of 0000 is not allowed" else rightVal)
-        >>= (\val -> if Data.Text.length val < 3 then Left "ID shorter than 3" else rightVal)
-        >>= (\val -> if Data.Foldable.any (not . isDigit) (cs val::String) then Left "ID should only be consisted of digits" else rightVal)
+        >>= (\_ ->  if "0000" `isPrefixOf` val then Left "Prefix of 0000 is not allowed" else rightVal)
+        >>= (\_ -> if Data.Text.length val < 3 then Left "ID shorter than 3" else rightVal)
+        >>= (\_ -> if Data.Foldable.any (not . isDigit) (cs val::String) then Left "ID should only be consisted of digits" else rightVal)
