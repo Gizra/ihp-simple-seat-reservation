@@ -18,6 +18,9 @@ let
             nodejs
             # For testing concurrent requests.
             parallel
+
+            # Mailhog for capturing emails.
+            mailhog
         ];
         projectPath = ./.;
     };
