@@ -1,6 +1,7 @@
 module Web.View.Events.Show where
 import Web.View.Prelude
 import Web.View.Reservations.Helper (renderReservationsCard)
+import Data.Text (replace)
 
 data ShowView = ShowView
     { event :: Event
@@ -22,7 +23,7 @@ instance View ShowView where
                     But we are also going to use it for the attendees to register to the event.
                 </p>
                 <p>
-                    You can test how twenty concurrent requests would look using <code>parallel</code>
+                    1) You can test how twenty concurrent requests would look using <code>parallel</code>
 
                     <div class="copy-paste flex flex-row items-center">
                         <input class="rounded-l border-yellow-500 text-gray-500 w-4/5" type="text" value={copyPasteCode} readonly />
@@ -35,6 +36,10 @@ instance View ShowView where
                         </button>
 
                     </div>
+                </p>
+
+                <p>
+                    2) You can view the sent HTML emails by opening Mailhog. {mailhogHelp baseUrl}
                 </p>
             </div>
         </div>
@@ -51,9 +56,6 @@ instance View ShowView where
                 <div>{get #endTime event |> dateTime}</div>
             </div>
         </div>
-
-
-
 
         {renderReservations event reservations}
 
@@ -75,6 +77,15 @@ instance View ShowView where
             eventId = show $ get #id event :: Text
 
             copyPasteCode = "time seq 20 | parallel -n0 \"curl '" ++ baseUrl ++ "/CreateReservation' -H 'content-type: application/x-www-form-urlencoded' --data-raw 'eventId=" ++ eventId ++ "&personIdentifier=1234' --compressed\"" :: Text
+
+
+mailhogHelp :: Text -> Html
+mailhogHelp baseUrl
+    | "http://localhost" `isInfixOf` baseUrl = [hsx|We think you run this instance locally, so you would need to manually install and run Mailhog, and then you can access it via <a class="underline" href="http://0.0.0.0:8025" target="_blank">http://0.0.0.0:8025</a>.|]
+    | "https://8000-" `isInfixOf` baseUrl= mailhogGitpod $ replace "https://8000-" "https://8025-" baseUrl
+    | otherwise = [hsx|We couldn't detect if you are running this instance locally or on GitPod.io, so we don't know where Mailhog is running.|]
+    where
+        mailhogGitpod url = [hsx| We think you run this instance on Gitpod.io, so you can access Mailhog via <a class="underline" href={url} target="_blank">{url}</a>|]
 
 
 renderReservations event reservations =
