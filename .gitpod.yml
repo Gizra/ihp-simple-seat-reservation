@@ -11,7 +11,7 @@ ports:
     onOpen: open-browser
 
 tasks:
-  - before: nix-env -iA nixpkgs.mailhog
+  - init: nix-env -iA nixpkgs.mailhog
     command: MailHog
 
   - init: >
