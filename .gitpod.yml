@@ -11,8 +11,8 @@ ports:
     onOpen: open-browser
 
 tasks:
-  - init: nix-env -iA nixpkgs.mailhog
-    command: /nix/store/9v57rdcmknfryp2brf09z9wp2i90h63q-MailHog-1.0.1/bin/MailHog
+  - before: nix-env -iA nixpkgs.mailhog
+    command: MailHog
 
   - init: >
       ( if [ ! -e "Main.hs" ]; then git init; git remote add ihp https://github.com/Gizra/ihp-simple-seat-reservation.git; git pull ihp main --rebase; nix-shell -j auto --cores 0 --quiet --run 'make -s all .envrc; new-application Web'; fi) && nix-shell -j auto --cores 0 --run 'make -s all .envrc' && direnv allow
