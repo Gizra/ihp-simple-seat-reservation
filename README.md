@@ -23,4 +23,4 @@ ghci
 main
 ```
 
-If you get an error [see](https://ihp.digitallyinduced.com/Guide/testing.html#:~:text=Please%20note%20that%20when%20entering)
+If you get an error [see this](https://ihp.digitallyinduced.com/Guide/testing.html#:~:text=Please%20note%20that%20when%20entering).
