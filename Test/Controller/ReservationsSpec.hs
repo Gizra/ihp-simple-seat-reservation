@@ -78,7 +78,7 @@ tests = aroundAll (withIHPApp WebApplication config) do
                 get #seatNumber reservation `shouldBe` 1
 
 
-        it "accepts valid student identifiers" $ withContext do
+        it "accepts valid person identifiers" $ withContext do
             let ids =
                     [ "0012"
                     , "1245"
