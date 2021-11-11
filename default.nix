@@ -1,8 +1,7 @@
 let
     ihp = builtins.fetchGit {
         url = "https://github.com/digitallyinduced/ihp.git";
-        ref = "app-delayed-start-until-db-ready";
-        rev = "d291bf771b29358f17574a7161ff530bd6715cdd";
+        rev = "a8acc6ff855b18edb23705d7d9d53a3dd008ec89";
     };
     haskellEnv = import "${ihp}/NixSupport/default.nix" {
         ihp = ihp;
