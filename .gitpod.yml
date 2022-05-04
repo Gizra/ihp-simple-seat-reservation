@@ -20,6 +20,7 @@ tasks:
       export IHP_BASEURL=`gp url 8000`;
       export IHP_IDE_BASEURL=`gp url 8001`;
       # Compile CSS
+      npm install
       make static/prod.css
       # Start app
       ./start
