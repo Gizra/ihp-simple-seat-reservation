@@ -193,7 +193,7 @@ customTailwind = def
         styledFormFieldHelp _ FormField { helpText = "" } = mempty
         styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs italic">{helpText}</p>|]
 
-        styledFormGroupClass = "flex flex-col my-6 space-y-2"
+        styledFormGroupClass = "flex flex-col space-y-4 my-4"
 
         styledValidationResultClass = "text-red-500 text-xs italic"
 
@@ -335,8 +335,8 @@ customTailwind = def
 
         styledBreadcrumb :: CSSFramework -> [BreadcrumbItem]-> BreadcrumbsView -> Blaze.Html
         styledBreadcrumb _ _ breadcrumbsView = [hsx|
-            <nav class="breadcrumbs bg-white my-4" aria-label="Breadcrumb">
-                <ol class="flex items-center space-x-2" role="list">
+            <nav class="breadcrumbs bg-gray-100 py-4 px-6 rounded my-4" aria-label="Breadcrumb">
+                <ol class="h-4 flex items-center space-x-2" role="list">
                     {get #breadcrumbItems breadcrumbsView}
                 </ol>
             </nav>
