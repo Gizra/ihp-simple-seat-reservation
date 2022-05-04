@@ -20,7 +20,7 @@ instance View NewView where
 renderForm :: Venue -> Html
 renderForm venue = formFor venue [hsx|
     {(textField #title)}
-    {(numberField #totalNumberOfSeats) { fieldInput = (\fieldInput -> H.input ! A.min "1") } }
+    {(numberField #totalNumberOfSeats) { additionalAttributes = [ ("min", "1") ] } }
     {submitButton}
 
 |]

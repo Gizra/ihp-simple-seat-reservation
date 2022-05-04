@@ -16,4 +16,5 @@ config = do
             { host = "127.0.1.1"
             , port = 1025
             , credentials = Nothing
+            , encryption = TLS
             }

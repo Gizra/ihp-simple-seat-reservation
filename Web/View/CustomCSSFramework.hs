@@ -4,15 +4,11 @@ import IHP.View.CSSFramework -- This is the only import not copied from IHP/View
 import IHP.Prelude
 import IHP.FlashMessages.Types
 import qualified Text.Blaze.Html5 as Blaze
-import Text.Blaze.Html.Renderer.Text (renderHtml)
 import IHP.HSX.QQ (hsx)
 import IHP.HSX.ToHtml ()
 import IHP.View.Types
 import IHP.View.Classes
 
-import qualified Text.Blaze.Html5 as H
-import Text.Blaze.Html5 ((!), (!?))
-import qualified Text.Blaze.Html5.Attributes as A
 import IHP.ModelSupport
 import IHP.Breadcrumb.Types
 import IHP.Pagination.Helpers
@@ -23,6 +19,10 @@ import IHP.View.Types (PaginationView(linkPrevious, pagination))
 customTailwind :: CSSFramework
 customTailwind = def
     { styledFlashMessage
+    , styledTextFormField
+    , styledTextareaFormField
+    , styledCheckboxFormField
+    , styledSelectFormField
     , styledSubmitButtonClass
     , styledFormGroupClass
     , styledFormFieldHelp
@@ -39,18 +39,161 @@ customTailwind = def
     , styledBreadcrumbItem
     }
     where
-        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="my-4 bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
-        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="my-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
 
-        styledInputClass FormField {} = "border-gray-500 focus:ring-2 focus:ring-blue-600 focus:ring-offset-1 focus:outline-none"
-        styledInputInvalidClass _ = "is-invalid"
+        styledCheckboxFormField :: CSSFramework -> FormField -> Blaze.Html -> Blaze.Html
+        styledCheckboxFormField cssFramework@CSSFramework {styledInputInvalidClass, styledFormFieldHelp} formField@FormField {fieldType, fieldName, fieldLabel, fieldValue, fieldInputId, validatorResult, fieldClass, disabled, disableLabel, disableValidationResult, additionalAttributes, labelClass, required, autofocus } validationResult = do
+            [hsx|<div class="form-check">{element}</div>|]
+            where
+                inputInvalidClass = styledInputInvalidClass cssFramework formField
+                helpText = styledFormFieldHelp cssFramework formField
 
-        styledSubmitButtonClass = "btn"
+                theInput = [hsx|
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    name={fieldName}
+                                    class={classes ["form-check-input", (inputInvalidClass, isJust validatorResult), (fieldClass, not (null fieldClass))]}
+                                    id={fieldInputId}
+                                    checked={fieldValue == "yes"}
+                                    required={required}
+                                    disabled={disabled}
+                                    autofocus={autofocus}
+                                    {...additionalAttributes}
+                                />
+
+                                <input type="hidden" name={fieldName} value={inputValue False} />
+                            </div>
+                        |]
+
+
+                element = if disableLabel
+                    then [hsx|<div class="flex flex-row space-x-2">
+                                {theInput}
+                                <div class="flex flex-col space-y-2">
+                                    {validationResult}
+                                    {helpText}
+                                </div>
+                            </div>
+                        |]
+                    else [hsx|
+                            <div class="flex flex-row space-x-2">
+                                {theInput}
+                                <div class="flex flex-col">
+                                    <label
+                                        class={classes ["font-medium text-gray-700", ("form-check-label", labelClass == ""), (labelClass, labelClass /= "")]}
+                                        for={fieldInputId}
+                                    >
+                                        {fieldLabel}
+                                    </label>
+
+                                    {validationResult}
+                                    {helpText}
+                                </div>
+                            </div>
+                        |]
+
+        styledTextFormField :: CSSFramework -> Text -> FormField -> Blaze.Html -> Blaze.Html
+        styledTextFormField cssFramework@CSSFramework {styledInputClass, styledInputInvalidClass, styledFormFieldHelp} inputType formField@FormField {fieldType, fieldName, fieldLabel, fieldValue, fieldInputId, validatorResult, fieldClass, disabled, disableLabel, disableValidationResult, additionalAttributes, labelClass, placeholder, required, autofocus } validationResult =
+            [hsx|
+                {label}
+                <input
+                    type={inputType}
+                    name={fieldName}
+                    placeholder={placeholder}
+                    id={fieldInputId}
+                    class={classes [inputClass, (inputInvalidClass, isJust validatorResult), (fieldClass, not (null fieldClass))]}
+                    value={maybeValue}
+                    required={required}
+                    disabled={disabled}
+                    autofocus={autofocus}
+                    {...additionalAttributes}
+                />
+
+                {validationResult}
+                {helpText}
+            |]
+            where
+                twLabelClass = "font-medium text-gray-700" <> " " <> labelClass
+                label = unless (disableLabel || null fieldLabel) [hsx|<label class={twLabelClass} for={fieldInputId}>{fieldLabel}</label>|]
+                inputClass = (styledInputClass cssFramework formField, True)
+                inputInvalidClass = styledInputInvalidClass cssFramework formField
+                helpText = styledFormFieldHelp cssFramework formField
+                -- If there's no value, then we want to hide the "value" attribute.
+                maybeValue = if fieldValue == "" then Nothing else Just fieldValue
+
+
+        styledTextareaFormField :: CSSFramework -> FormField -> Blaze.Html -> Blaze.Html
+        styledTextareaFormField cssFramework@CSSFramework {styledInputClass, styledInputInvalidClass, styledFormFieldHelp} formField@FormField {fieldType, fieldName, fieldLabel, fieldValue, fieldInputId, validatorResult, fieldClass, disabled, disableLabel, disableValidationResult, additionalAttributes, labelClass, placeholder, required, autofocus } validationResult =
+            [hsx|
+                {label}
+                <textarea
+                    name={fieldName}
+                    placeholder={placeholder}
+                    id={fieldInputId}
+                    class={classes [inputClass, (inputInvalidClass, isJust validatorResult), (fieldClass, not (null fieldClass))]}
+                    required={required}
+                    disabled={disabled}
+                    autofocus={autofocus}
+                    {...additionalAttributes}
+                >{fieldValue}</textarea>{validationResult}{helpText}
+            |]
+            where
+                twLabelClass = classes ["font-medium text-gray-700", (labelClass, not (null labelClass))]
+                label = unless (disableLabel || null fieldLabel) [hsx|<label class={twLabelClass} for={fieldInputId}>{fieldLabel}</label>|]
+                inputClass = (styledInputClass cssFramework formField, True)
+                inputInvalidClass = styledInputInvalidClass cssFramework formField
+                helpText = styledFormFieldHelp cssFramework formField
+
+
+        styledSelectFormField :: CSSFramework -> FormField -> Blaze.Html -> Blaze.Html
+        styledSelectFormField cssFramework@CSSFramework {styledInputClass, styledInputInvalidClass, styledFormFieldHelp} formField@FormField {fieldType, fieldName, placeholder, fieldLabel, fieldValue, fieldInputId, validatorResult, fieldClass, disabled, disableLabel, disableValidationResult, additionalAttributes, labelClass, required, autofocus } validationResult =
+            [hsx|
+                {label}
+                <select
+                    name={fieldName}
+                    id={fieldInputId}
+                    class={classes [inputClass, (inputInvalidClass, isJust validatorResult), (fieldClass, not (null fieldClass))]}
+                    value={fieldValue}
+                    disabled={disabled}
+                    required={required}
+                    autofocus={autofocus}
+                    {...additionalAttributes}
+                >
+                    <option selected={not isValueSelected} disabled={True}>{placeholder}</option>
+                    {forEach (options fieldType) (getOption)}
+                </select>
+
+                {validationResult}
+                {helpText}
+            |]
+            where
+                twLabelClass = "font-medium text-gray-700" <> " " <> labelClass
+                label = unless disableLabel [hsx|<label class={twLabelClass} for={fieldInputId}>{fieldLabel}</label>|]
+                inputClass = (styledInputClass cssFramework formField, True)
+                inputInvalidClass = styledInputInvalidClass cssFramework formField
+                helpText = styledFormFieldHelp cssFramework formField
+
+                isValueSelected = any (\(_, optionValue) -> optionValue == fieldValue) (options fieldType)
+
+                -- Get a single option.
+                getOption (optionLabel, optionValue) = [hsx|
+                    <option value={optionValue} selected={optionValue == fieldValue}>
+                        {optionLabel}
+                    </option>
+                |]
+
+
+        styledInputClass _ FormField {} = "focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md"
+        styledInputInvalidClass _ _ = "is-invalid"
+
+        styledSubmitButtonClass = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 
         styledFormFieldHelp _ FormField { helpText = "" } = mempty
-        styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs">{helpText}</p>|]
+        styledFormFieldHelp _ FormField { helpText } = [hsx|<p class="text-gray-600 text-xs italic">{helpText}</p>|]
 
-        styledFormGroupClass = "flex flex-col space-y-4 my-4"
+        styledFormGroupClass = "flex flex-col my-6 space-y-2"
 
         styledValidationResultClass = "text-red-500 text-xs italic"
 
@@ -94,14 +237,19 @@ customTailwind = def
                         {nextMobileOnly}
                     </div>
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div class="text-sm text-gray-700">
+                            <select class="px-4 py-3" id="maxItemsSelect" onchange="window.location.href = this.options[this.selectedIndex].dataset.url">
+                                {get #itemsPerPageSelector paginationView}
+                            </select>
+                        </div>
                         <div>
-                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                {get #linkPrevious paginationView}
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            {get #linkPrevious paginationView}
 
-                                {get #pageDotDotItems paginationView}
+                            {get #pageDotDotItems paginationView}
 
-                                {get #linkNext paginationView}
-                            </nav>
+                            {get #linkNext paginationView}
+                        </nav>
                         </div>
                     </div>
                 </div>
@@ -155,7 +303,7 @@ customTailwind = def
                 linkClass = classes
                     [ "relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                     -- Current page
-                    , ("z-10 bg-indigo-50 border-indigo-500 text-indigo-600", pageNumber == currentPage)
+                    , ("z-10 bg-blue-50 border-blue-500 text-blue-600", pageNumber == currentPage)
                     -- Not current page
                     , ("bg-white border-gray-300 text-gray-500 hover:bg-gray-50", pageNumber /= currentPage)
                     ]
@@ -187,8 +335,8 @@ customTailwind = def
 
         styledBreadcrumb :: CSSFramework -> [BreadcrumbItem]-> BreadcrumbsView -> Blaze.Html
         styledBreadcrumb _ _ breadcrumbsView = [hsx|
-            <nav class="breadcrumbs bg-gray-100 py-4 px-6 rounded my-4" aria-label="Breadcrumb">
-                <ol class="h-4 flex items-center space-x-2" role="list">
+            <nav class="breadcrumbs bg-white my-4" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2" role="list">
                     {get #breadcrumbItems breadcrumbsView}
                 </ol>
             </nav>
