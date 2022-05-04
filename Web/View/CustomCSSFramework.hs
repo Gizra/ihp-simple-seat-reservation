@@ -39,8 +39,8 @@ customTailwind = def
     , styledBreadcrumbItem
     }
     where
-        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
-        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (SuccessFlashMessage message) = [hsx|<div class="my-4 bg-green-100 border border-green-500 text-green-900 px-4 py-3 rounded relative">{message}</div>|]
+        styledFlashMessage _ (ErrorFlashMessage message) = [hsx|<div class="my-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>|]
 
         styledCheckboxFormField :: CSSFramework -> FormField -> Blaze.Html -> Blaze.Html
         styledCheckboxFormField cssFramework@CSSFramework {styledInputInvalidClass, styledFormFieldHelp} formField@FormField {fieldType, fieldName, fieldLabel, fieldValue, fieldInputId, validatorResult, fieldClass, disabled, disableLabel, disableValidationResult, additionalAttributes, labelClass, required, autofocus } validationResult = do
