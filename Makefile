@@ -22,6 +22,6 @@ JS_FILES += ${IHP}/static/vendor/turbolinksMorphdom.js
 include ${IHP}/Makefile.dist
 
 tailwind-dev:
-	cd tailwind && npx tailwindcss -i ./app.css -o ../static/app.css --watch
+	node_modules/.bin/tailwind -c tailwind/tailwind.config.js -i ./tailwind/app.css -o static/app.css --watch
 static/app.css:
-	cd tailwind && NODE_ENV=production npx tailwindcss -i ./app.css -o ../static/app.css --minify
+	NODE_ENV=production node_modules/.bin/tailwind -c tailwind/tailwind.config.js -i ./tailwind/app.css -o static/app.css --minify

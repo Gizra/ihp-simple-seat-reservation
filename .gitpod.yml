@@ -14,11 +14,17 @@ tasks:
   - before: nix-env -iA nixpkgs.mailhog
     command: MailHog
 
-  - init: >
+
+  - init: |
       ( if [ ! -e "Main.hs" ]; then git init; git remote add ihp https://github.com/Gizra/ihp-simple-seat-reservation.git; git pull ihp main --rebase; nix-shell -j auto --cores 0 --quiet --run 'make -s all .envrc; new-application Web'; fi) && nix-shell -j auto --cores 0 --run 'make -s all .envrc' && direnv allow
-    command: >
-      export IHP_BASEURL=`gp url 8000`;
-      export IHP_IDE_BASEURL=`gp url 8001`;
+      # Compile CSS
+      nix-shell --run 'make -B .envrc'
+      nix-shell --run 'npm install'
+      nix-shell --run 'make static/prod.css'
+
+    command: |
+      export IHP_BASEURL=`gp url 8000`
+      export IHP_IDE_BASEURL=`gp url 8001`
       ./start
 
 vscode:
@@ -39,8 +45,8 @@ github:
     # enable for pull requests coming from forks (defaults to false)
     pullRequestsFromForks: true
     # add a check to pull requests (defaults to true)
-    addCheck: true
+    addCheck: false
     # add a "Review in Gitpod" button as a comment to pull requests (defaults to false)
-    addComment: true
+    addComment: false
     # add a "Review in Gitpod" button to the pull request's description (defaults to false)
-    addBadge: false
+    addBadge: true
