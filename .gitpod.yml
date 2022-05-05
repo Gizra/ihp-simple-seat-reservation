@@ -20,7 +20,7 @@ tasks:
       # Compile CSS
       nix-shell --run 'make -B .envrc'
       nix-shell --run 'npm install'
-      make static/prod.css
+      nix-shell --run 'make static/prod.css'
 
     command: >
       export IHP_BASEURL=`gp url 8000`;
