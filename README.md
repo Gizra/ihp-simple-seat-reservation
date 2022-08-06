@@ -12,6 +12,8 @@ After following the steps to install [IHP](https://ihp.digitallyinduced.com/Guid
 ./start
 ```
 
+... and in another tab execute `make tailwind-dev` to compile the CSS.
+
 ## Test
 
 ```
