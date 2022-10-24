@@ -13,17 +13,17 @@ instance Job ReservationJob where
 
         -- Delay the job for a few seconds to give the user time to
         -- see the status change.
-        when (get #delay reservation) (threadDelay (2 * 1000000))
+        when reservation.delay (threadDelay (2 * 1000000))
 
-        event <- fetch (get #eventId reservation)
-        venue <- fetch (get #venueId event)
+        event <- fetch reservation.eventId
+        venue <- fetch event.venueId
 
         -- Other reservations
         otherReservations <- query @Reservation
             -- Related Reservations.
-            |> filterWhere (#eventId, get #id event)
+            |> filterWhere (#eventId, event.id)
             -- Exclude current reservation.
-            |> filterWhereNot (#id, get #id reservation)
+            |> filterWhereNot (#id, reservation.id)
             -- Fetch only Accepted items.
             |> filterWhere (#status, Accepted)
             |> fetch

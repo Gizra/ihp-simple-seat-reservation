@@ -63,7 +63,7 @@ instance View ShowView where
         where
             breadcrumb = renderBreadcrumb
                             [ breadcrumbLink homeIcon $ VenuesAction
-                            , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction (get #venueId event)
+                            , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction event.venueId
                             , breadcrumbText $ cs (get #title event)
                             ]
 
@@ -74,7 +74,7 @@ instance View ShowView where
 
             baseUrl = ?context.frameworkConfig.baseUrl
 
-            eventId = show $ get #id event :: Text
+            eventId = show $ event.id :: Text
 
             copyPasteCode = "time seq 20 | parallel -n0 \"curl '" ++ baseUrl ++ "/CreateReservation' -H 'content-type: application/x-www-form-urlencoded' --data-raw 'eventId=" ++ eventId ++ "&personIdentifier=1234' --compressed\"" :: Text
 
@@ -91,7 +91,7 @@ mailhogHelp baseUrl
 renderReservations event reservations =
     [hsx|
         <div>
-            <a href={pathTo $ NewReservationAction (get #id event) } class="inline-block btn btn-primary mb-4">New Reservation</a>
+            <a href={pathTo $ NewReservationAction event.id } class="inline-block btn btn-primary mb-4">New Reservation</a>
         </div>
 
         {content}

@@ -20,10 +20,10 @@ instance BuildMail ConfirmationMail where
     to ConfirmationMail { .. } = Address { addressName = Just "Firstname Lastname", addressEmail = "fname.lname@example.com" }
     from = "hi@example.com"
     html ConfirmationMail { .. } = [hsx|
-        Hello Person (#{get #personIdentifier reservation}),
+        Hello Person (#{reservation.personIdentifier}),
 
         <p>
             Your reservation for venue "{get #title venue}" is now <strong>{get #status reservation}</strong>
-            See <a href={urlTo $ ShowReservationAction (get #id reservation)}>Reservation</a>
+            See <a href={urlTo $ ShowReservationAction reservation.id}>Reservation</a>
         </p>
     |]
