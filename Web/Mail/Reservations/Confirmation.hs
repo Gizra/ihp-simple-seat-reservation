@@ -14,7 +14,7 @@ instance BuildMail ConfirmationMail where
             Rejected -> "Reservation Rejected"
             _ -> ""
         where
-            reservation = get #reservation ?mail
+            reservation = ?mail.reservation
             status = reservation.status
 
     to ConfirmationMail { .. } = Address { addressName = Just "Firstname Lastname", addressEmail = "fname.lname@example.com" }

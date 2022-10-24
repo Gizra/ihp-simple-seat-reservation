@@ -60,7 +60,7 @@ assignSeatNumber venue otherReservations reservation =
             |> Data.Set.delete 0
             |> Data.Set.toList
 
-        totalNumberOfSeats = get #totalNumberOfSeats venue
+        totalNumberOfSeats = venue.totalNumberOfSeats
     in
     if length assignedSeatNumbers >= totalNumberOfSeats
         then reservation |> attachFailure #seatNumber "All seats are already taken"
