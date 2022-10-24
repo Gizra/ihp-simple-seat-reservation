@@ -72,7 +72,7 @@ instance View ShowView where
                     |> filter (\reservation -> get #status reservation == Accepted)
                     |> length
 
-            baseUrl = getConfig |> get #baseUrl
+            baseUrl = ?context.frameworkConfig.baseUrl
 
             eventId = show $ get #id event :: Text
 
