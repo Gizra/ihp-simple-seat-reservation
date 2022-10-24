@@ -70,7 +70,7 @@ tests = aroundAll (withIHPApp WebApplication config) do
 
 
                 -- Process job.
-                let frameworkConfig = getFrameworkConfig ?context
+                let frameworkConfig = ?context.frameworkConfig
                 let ?context = frameworkConfig in perform reservationJob
 
                 -- Reload Reservation from it.
