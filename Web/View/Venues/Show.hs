@@ -11,7 +11,7 @@ instance View ShowView where
         {breadcrumb}
 
         <div class="flex flex-col space-y-6 mb-12">
-            <h1>{get #title venue}'s Events</h1>
+            <h1>{venue.title}'s Events</h1>
 
             <div>
                 <a href={pathTo $ NewEventAction venue.id } class="btn btn-primary">+ Add Event</a>
@@ -24,7 +24,7 @@ instance View ShowView where
         where
             breadcrumb = renderBreadcrumb
                             [ breadcrumbLink homeIcon VenuesAction
-                            , breadcrumbText $ cs (get #title venue)
+                            , breadcrumbText $ cs venue.title
                             ]
 
 renderEvents venue events =
@@ -53,7 +53,7 @@ renderEvents venue events =
 renderEvent :: Int -> Event -> Html
 renderEvent totalEvents event = [hsx|
         <tr>
-            <td class={tableTdClasses}><a class={linkClass} href={ShowEventAction event.id}>{get #title event}</a></td>
+            <td class={tableTdClasses}><a class={linkClass} href={ShowEventAction event.id}>{event.title}</a></td>
             <td class={tableTdClasses}>{get #startTime event |> dateTime}</td>
             <td class={tableTdClasses}>{get #endTime event |> dateTime}</td>
         </tr>

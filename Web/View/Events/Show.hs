@@ -44,7 +44,7 @@ instance View ShowView where
             </div>
         </div>
 
-        <h1>Reservations for {get #title event} Event</h1>
+        <h1>Reservations for {event.title} Event</h1>
 
         <div class="flex flex-col space-y-2 sm:flex-row justify-between mt-6 mb-8 items-baseline">
 
@@ -63,8 +63,8 @@ instance View ShowView where
         where
             breadcrumb = renderBreadcrumb
                             [ breadcrumbLink homeIcon $ VenuesAction
-                            , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction event.venueId
-                            , breadcrumbText $ cs (get #title event)
+                            , breadcrumbLink (cs venue.title) $ ShowVenueAction event.venueId
+                            , breadcrumbText $ cs event.title
                             ]
 
             acceptedReservations =

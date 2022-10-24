@@ -18,8 +18,8 @@ instance View NewView where
         where
             breadcrumb = renderBreadcrumb
                 [ breadcrumbLink homeIcon $ VenuesAction
-                , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction event.venueId
-                , breadcrumbLink (cs (get #title event)) $ ShowEventAction event.id
+                , breadcrumbLink (cs venue.title) $ ShowVenueAction event.venueId
+                , breadcrumbLink (cs event.title) $ ShowEventAction event.id
                 , breadcrumbText "New Reservation"
                 ]
 

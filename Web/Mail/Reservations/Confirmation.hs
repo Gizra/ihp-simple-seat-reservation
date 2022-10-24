@@ -23,7 +23,7 @@ instance BuildMail ConfirmationMail where
         Hello Person (#{reservation.personIdentifier}),
 
         <p>
-            Your reservation for venue "{get #title venue}" is now <strong>{get #status reservation}</strong>
+            Your reservation for venue "{venue.title}" is now <strong>{get #status reservation}</strong>
             See <a href={urlTo $ ShowReservationAction reservation.id}>Reservation</a>
         </p>
     |]
