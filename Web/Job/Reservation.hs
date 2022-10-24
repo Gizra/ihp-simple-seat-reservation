@@ -55,7 +55,7 @@ instance Job ReservationJob where
 assignSeatNumber :: Venue -> [Reservation] -> Reservation -> Reservation
 assignSeatNumber venue otherReservations reservation =
     let
-        assignedSeatNumbers = map (get #seatNumber) otherReservations
+        assignedSeatNumbers = map (.seatNumber) otherReservations
             |> Data.Set.fromList
             |> Data.Set.delete 0
             |> Data.Set.toList
