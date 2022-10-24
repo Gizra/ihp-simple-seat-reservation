@@ -48,12 +48,12 @@ instance View ShowView where
 
         <div class="flex flex-col space-y-2 sm:flex-row justify-between mt-6 mb-8 items-baseline">
 
-            <div><strong>{acceptedReservations}</strong> out of <strong>{get #totalNumberOfSeats venue}</strong> total seats</div>
+            <div><strong>{acceptedReservations}</strong> out of <strong>{venue.totalNumberOfSeats }</strong> total seats</div>
 
             <div class="flex flex-row space-x-2 text-gray-500 text-sm">
-                <div>{get #startTime event |> dateTime}</div>
+                <div>{event.startTime  |> dateTime}</div>
                 <span>—</span>
-                <div>{get #endTime event |> dateTime}</div>
+                <div>{event.endTime |> dateTime}</div>
             </div>
         </div>
 

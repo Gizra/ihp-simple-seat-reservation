@@ -43,7 +43,7 @@ renderReservationsCard maybeTotalReservationsAndIndex reservation = [hsx|
              Nothing -> mempty
 
         seatContent =
-                case get #status reservation of
+                case reservation.status of
                     Queued -> [hsx|
                         <div class="flex flex-row space-x-2 items-end">
                             <!-- https://heroicons.com/: clock -->
@@ -64,7 +64,7 @@ renderReservationsCard maybeTotalReservationsAndIndex reservation = [hsx|
                             </svg>
 
                             <div class="text-gray-900">
-                                Seat {get #seatNumber reservation}
+                                Seat {reservation.seatNumber}
                             </div>
 
                         </div>

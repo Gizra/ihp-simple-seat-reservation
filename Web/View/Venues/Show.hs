@@ -54,8 +54,8 @@ renderEvent :: Int -> Event -> Html
 renderEvent totalEvents event = [hsx|
         <tr>
             <td class={tableTdClasses}><a class={linkClass} href={ShowEventAction event.id}>{event.title}</a></td>
-            <td class={tableTdClasses}>{get #startTime event |> dateTime}</td>
-            <td class={tableTdClasses}>{get #endTime event |> dateTime}</td>
+            <td class={tableTdClasses}>{event.startTime |> dateTime}</td>
+            <td class={tableTdClasses}>{event.endTime |> dateTime}</td>
         </tr>
 
 
