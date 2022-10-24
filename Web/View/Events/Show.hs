@@ -69,7 +69,7 @@ instance View ShowView where
 
             acceptedReservations =
                 reservations
-                    |> filter (\reservation -> get #status reservation == Accepted)
+                    |> filter (\reservation -> reservation.status == Accepted)
                     |> length
 
             baseUrl = ?context.frameworkConfig.baseUrl
