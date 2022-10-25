@@ -6,6 +6,7 @@ import IHP.Prelude
 import IHP.QueryBuilder (query)
 import IHP.Test.Mocking
 import IHP.Fetch
+import IHP.Controller.RequestContext
 
 import IHP.FrameworkConfig
 import IHP.HaskellSupport
