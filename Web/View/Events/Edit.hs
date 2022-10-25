@@ -11,7 +11,7 @@ instance View EditView where
     |]
         where
             breadcrumb = renderBreadcrumb
-                [ breadcrumbLink "Events" $ ShowEventAction (get #id event)
+                [ breadcrumbLink "Events" $ ShowEventAction event.id
                 , breadcrumbText "Edit Event"
                 ]
 

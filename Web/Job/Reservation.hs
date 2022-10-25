@@ -13,17 +13,17 @@ instance Job ReservationJob where
 
         -- Delay the job for a few seconds to give the user time to
         -- see the status change.
-        when (get #delay reservation) (threadDelay (2 * 1000000))
+        when reservation.delay (threadDelay (2 * 1000000))
 
-        event <- fetch (get #eventId reservation)
-        venue <- fetch (get #venueId event)
+        event <- fetch reservation.eventId
+        venue <- fetch event.venueId
 
         -- Other reservations
         otherReservations <- query @Reservation
             -- Related Reservations.
-            |> filterWhere (#eventId, get #id event)
+            |> filterWhere (#eventId, event.id)
             -- Exclude current reservation.
-            |> filterWhereNot (#id, get #id reservation)
+            |> filterWhereNot (#id, reservation.id)
             -- Fetch only Accepted items.
             |> filterWhere (#status, Accepted)
             |> fetch
@@ -55,12 +55,12 @@ instance Job ReservationJob where
 assignSeatNumber :: Venue -> [Reservation] -> Reservation -> Reservation
 assignSeatNumber venue otherReservations reservation =
     let
-        assignedSeatNumbers = map (get #seatNumber) otherReservations
+        assignedSeatNumbers = map (.seatNumber) otherReservations
             |> Data.Set.fromList
             |> Data.Set.delete 0
             |> Data.Set.toList
 
-        totalNumberOfSeats = get #totalNumberOfSeats venue
+        totalNumberOfSeats = venue.totalNumberOfSeats
     in
     if length assignedSeatNumbers >= totalNumberOfSeats
         then reservation |> attachFailure #seatNumber "All seats are already taken"

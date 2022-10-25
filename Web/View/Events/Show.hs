@@ -44,16 +44,16 @@ instance View ShowView where
             </div>
         </div>
 
-        <h1>Reservations for {get #title event} Event</h1>
+        <h1>Reservations for {event.title} Event</h1>
 
         <div class="flex flex-col space-y-2 sm:flex-row justify-between mt-6 mb-8 items-baseline">
 
-            <div><strong>{acceptedReservations}</strong> out of <strong>{get #totalNumberOfSeats venue}</strong> total seats</div>
+            <div><strong>{acceptedReservations}</strong> out of <strong>{venue.totalNumberOfSeats }</strong> total seats</div>
 
             <div class="flex flex-row space-x-2 text-gray-500 text-sm">
-                <div>{get #startTime event |> dateTime}</div>
+                <div>{event.startTime  |> dateTime}</div>
                 <span>—</span>
-                <div>{get #endTime event |> dateTime}</div>
+                <div>{event.endTime |> dateTime}</div>
             </div>
         </div>
 
@@ -63,18 +63,18 @@ instance View ShowView where
         where
             breadcrumb = renderBreadcrumb
                             [ breadcrumbLink homeIcon $ VenuesAction
-                            , breadcrumbLink (cs (get #title venue)) $ ShowVenueAction (get #venueId event)
-                            , breadcrumbText $ cs (get #title event)
+                            , breadcrumbLink (cs venue.title) $ ShowVenueAction event.venueId
+                            , breadcrumbText $ cs event.title
                             ]
 
             acceptedReservations =
                 reservations
-                    |> filter (\reservation -> get #status reservation == Accepted)
+                    |> filter (\reservation -> reservation.status == Accepted)
                     |> length
 
             baseUrl = ?context.frameworkConfig.baseUrl
 
-            eventId = show $ get #id event :: Text
+            eventId = show $ event.id :: Text
 
             copyPasteCode = "time seq 20 | parallel -n0 \"curl '" ++ baseUrl ++ "/CreateReservation' -H 'content-type: application/x-www-form-urlencoded' --data-raw 'eventId=" ++ eventId ++ "&personIdentifier=1234' --compressed\"" :: Text
 
@@ -91,7 +91,7 @@ mailhogHelp baseUrl
 renderReservations event reservations =
     [hsx|
         <div>
-            <a href={pathTo $ NewReservationAction (get #id event) } class="inline-block btn btn-primary mb-4">New Reservation</a>
+            <a href={pathTo $ NewReservationAction event.id } class="inline-block btn btn-primary mb-4">New Reservation</a>
         </div>
 
         {content}

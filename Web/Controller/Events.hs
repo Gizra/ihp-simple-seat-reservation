@@ -19,7 +19,7 @@ instance Controller EventsController where
 
     action ShowEventAction { eventId } = autoRefresh do
         event <- fetch eventId
-        venue <- fetch (get #venueId event)
+        venue <- fetch event.venueId
         reservations <- query @Reservation
                 |> filterWhere (#eventId, eventId)
                 |> orderByDesc #createdAt
@@ -50,12 +50,12 @@ instance Controller EventsController where
             |> buildEvent
             |> ifValid \case
                 Left event -> do
-                    venue <- fetch (get #venueId event)
+                    venue <- fetch event.venueId
                     render NewView { .. }
                 Right event -> do
                     event <- event |> createRecord
                     setSuccessMessage "Event created"
-                    redirectTo $ ShowEventAction (get #id event)
+                    redirectTo $ ShowEventAction event.id
 
     action DeleteEventAction { eventId } = do
         event <- fetch eventId

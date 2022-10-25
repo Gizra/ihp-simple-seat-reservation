@@ -35,9 +35,9 @@ instance View IndexView where
 renderVenue :: Venue -> Html
 renderVenue venue = [hsx|
     <tr>
-        <td class={tableTdClasses}><a class={linkClass} href={ShowVenueAction (get #id venue)}>{get #title venue}</a></td>
+        <td class={tableTdClasses}><a class={linkClass} href={ShowVenueAction venue.id}>{venue.title}</a></td>
         <td class={tableTdClasses}>
-            <a href={EditVenueAction (get #id venue)} class={linkClass}>Edit</a>
+            <a href={EditVenueAction venue.id} class={linkClass}>Edit</a>
         </td>
     </tr>
 |]

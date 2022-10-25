@@ -200,7 +200,7 @@ customTailwind = def
         styledPagination :: CSSFramework -> PaginationView -> Blaze.Html
         styledPagination _ paginationView@PaginationView {pageUrl, pagination} =
             let
-                currentPage = get #currentPage pagination
+                currentPage = pagination.currentPage
 
                 previousPageUrl = if hasPreviousPage pagination then pageUrl $ currentPage - 1 else "#"
                 nextPageUrl = if hasNextPage pagination then pageUrl $ currentPage + 1 else "#"
@@ -239,16 +239,16 @@ customTailwind = def
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div class="text-sm text-gray-700">
                             <select class="px-4 py-3" id="maxItemsSelect" onchange="window.location.href = this.options[this.selectedIndex].dataset.url">
-                                {get #itemsPerPageSelector paginationView}
+                                {paginationView.itemsPerPageSelector}
                             </select>
                         </div>
                         <div>
                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            {get #linkPrevious paginationView}
+                            {paginationView.linkPrevious }
 
-                            {get #pageDotDotItems paginationView}
+                            {paginationView.pageDotDotItems}
 
-                            {get #linkNext paginationView}
+                            {paginationView.linkNext}
                         </nav>
                         </div>
                     </div>
@@ -337,7 +337,7 @@ customTailwind = def
         styledBreadcrumb _ _ breadcrumbsView = [hsx|
             <nav class="breadcrumbs bg-gray-100 py-4 px-6 rounded my-4" aria-label="Breadcrumb">
                 <ol class="h-4 flex items-center space-x-2" role="list">
-                    {get #breadcrumbItems breadcrumbsView}
+                    {breadcrumbsView.breadcrumbItems }
                 </ol>
             </nav>
         |]

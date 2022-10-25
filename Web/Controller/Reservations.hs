@@ -14,13 +14,13 @@ instance Controller ReservationsController where
     action NewReservationAction {..} = do
         let reservation = newRecord |> set #eventId eventId
         event <- fetch eventId
-        venue <- fetch (get #venueId event)
+        venue <- fetch event.venueId
         render NewView { .. }
 
     action ShowReservationAction { reservationId } = do
         reservation <- fetch reservationId
-        event <- fetch (get #eventId reservation)
-        venue <- fetch (get #venueId event)
+        event <- fetch reservation.eventId
+        venue <- fetch event.venueId
         render ShowView { .. }
 
     action CreateReservationAction = do
@@ -30,8 +30,8 @@ instance Controller ReservationsController where
             |> validatePersonIdentifier
             |> ifValid \case
                 Left reservation -> do
-                    event <- fetch (get #eventId reservation)
-                    venue <- fetch (get #venueId event)
+                    event <- fetch reservation.eventId
+                    venue <- fetch event.venueId
                     render NewView { .. }
                 Right reservation -> do
                     reservation <- reservation
@@ -40,23 +40,23 @@ instance Controller ReservationsController where
 
                     -- Create a Job for the Reservation to be processed.
                     newRecord @ReservationJob
-                        |> set #reservationId (get #id reservation)
+                        |> set #reservationId reservation.id
                         |> create
 
                     setSuccessMessage "Reservation request registered"
-                    redirectTo $ ShowEventAction (get #eventId reservation)
+                    redirectTo $ ShowEventAction reservation.eventId
 
     action DeleteReservationAction { reservationId } = do
         reservation <- fetch reservationId
         deleteRecord reservation
         setSuccessMessage "Reservation deleted"
-        redirectTo $ ShowEventAction (get #eventId reservation)
+        redirectTo $ ShowEventAction reservation.eventId
 
 buildReservation reservation = reservation
     |> fill @["eventId","seatNumber","personIdentifier", "delay"]
 
 validatePersonIdentifier reservation =
-    if isLeft (personIdentifierResult $ get #personIdentifier reservation)
+    if isLeft (personIdentifierResult $ reservation.personIdentifier)
         then reservation |> attachFailure #personIdentifier "Person ID is not valid"
         else reservation
 

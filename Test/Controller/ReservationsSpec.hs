@@ -6,6 +6,7 @@ import IHP.Prelude
 import IHP.QueryBuilder (query)
 import IHP.Test.Mocking
 import IHP.Fetch
+import IHP.Controller.RequestContext
 
 import IHP.FrameworkConfig
 import IHP.HaskellSupport
@@ -44,10 +45,10 @@ tests = aroundAll (withIHPApp WebApplication config) do
 
                 -- Create Event.
                 event <- newRecord @Event
-                        |> set #venueId (get #id venue)
+                        |> set #venueId venue.id
                         |> create
 
-                let eventId = cs $ tshow $ get #id event
+                let eventId = cs $ tshow $ event.id
 
                 let params =
                         [ ("personIdentifier", "1234")
@@ -64,18 +65,18 @@ tests = aroundAll (withIHPApp WebApplication config) do
                 count `shouldBe` 1
 
                 reservationJob <- query @ReservationJob |> orderByDesc #createdAt |> fetchOne
-                reservation <- fetch (get #reservationId reservationJob)
+                reservation <- fetch reservationJob.reservationId
                 -- Seat not assigned yet.
-                get #seatNumber reservation `shouldBe` 0
+                reservation.seatNumber `shouldBe` 0
 
 
                 -- Process job.
-                let frameworkConfig = getFrameworkConfig ?context
+                let frameworkConfig = ?context.frameworkConfig
                 let ?context = frameworkConfig in perform reservationJob
 
                 -- Reload Reservation from it.
-                reservation <- fetch (get #reservationId reservationJob)
-                get #seatNumber reservation `shouldBe` 1
+                reservation <- fetch reservationJob.reservationId
+                reservation.seatNumber `shouldBe` 1
 
 
         it "accepts valid person identifiers" $ withContext do
