@@ -61,4 +61,5 @@ instance Controller VenuesController where
 
 buildVenue venue = venue
     |> fill @["title","totalNumberOfSeats"]
+    |> validateField #title nonEmpty
     |> validateField #totalNumberOfSeats (isGreaterThan 0)

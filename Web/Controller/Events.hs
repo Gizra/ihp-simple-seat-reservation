@@ -65,3 +65,4 @@ instance Controller EventsController where
 
 buildEvent event = event
     |> fill @'["venueId", "title", "startTime", "endTime"]
+    |> validateField #title nonEmpty
