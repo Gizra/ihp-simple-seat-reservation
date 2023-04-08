@@ -2,6 +2,7 @@ module Web.View.Events.Show where
 import Web.View.Prelude
 import Web.View.Reservations.Helper (renderReservationsCard)
 import Data.Text (replace)
+import Web.Element.ElementWrap
 
 data ShowView = ShowView
     { event :: Event
@@ -104,10 +105,6 @@ renderReservations event reservations =
                         No reservations yet...
                     </div>
                 |]
-                else [hsx|
-                    <div class="flex flex-col space-y-2">
-                        {forEachWithIndex reservations (\(index, reservation) -> renderReservationsCard (Just (totalReservations, index)) reservation)}
-                    </div>
-                |]
-                        where totalReservations = length reservations
+                else wrapContainerVerticalSpacingTiny $ forEachWithIndex reservations (\(index, reservation) -> renderReservationsCard (Just (totalReservations, index)) reservation)
+                    where totalReservations = length reservations
 
