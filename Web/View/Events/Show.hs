@@ -2,6 +2,7 @@ module Web.View.Events.Show where
 import Web.View.Prelude
 import Web.View.Reservations.Helper (renderReservationsCard)
 import Data.Text (replace)
+import Web.Element.Button
 import Web.Element.ElementWrap
 
 data ShowView = ShowView
@@ -19,11 +20,11 @@ instance View ShowView where
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div class="flex flex-col space-y-6">
-                <p>
+                <div>
                     This area is meant for the event organizer to view the reservations.
                     But we are also going to use it for the attendees to register to the event.
-                </p>
-                <p>
+                </div>
+                <div>
                     1) You can test how twenty concurrent requests would look using <code>parallel</code>
 
                     <div class="copy-paste flex flex-row items-center">
@@ -37,11 +38,11 @@ instance View ShowView where
                         </button>
 
                     </div>
-                </p>
+                </div>
 
-                <p>
+                <div>
                     2) You can view the sent HTML emails by opening Mailhog. {mailhogHelp baseUrl}
-                </p>
+                </div>
             </div>
         </div>
 
@@ -90,13 +91,10 @@ mailhogHelp baseUrl
 
 
 renderReservations event reservations =
-    [hsx|
-        <div>
-            <a href={pathTo $ NewReservationAction event.id } class="inline-block btn btn-primary mb-4">New Reservation</a>
-        </div>
-
-        {content}
-    |]
+    wrapContainerVerticalSpacing [
+        buildButton "New Reservation" (NewReservationAction event.id),
+        content
+    ]
     where
         content =
             if null reservations
