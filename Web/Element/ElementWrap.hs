@@ -17,7 +17,7 @@ wrapContainerVerticalSpacing elements =
     in
     case filterElements of
         [] -> [hsx||]
-        _ -> [hsx|<div class="flex flex-col gap-y-5 md:gap-y-6">{filterElements}</div>|]
+        _ -> [hsx|<div class="flex flex-col gap-y-5 md:gap-y-6">{forEach filterElements (\element -> element)}</div>|]
 
 
 
