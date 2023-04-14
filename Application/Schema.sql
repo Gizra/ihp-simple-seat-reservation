@@ -44,3 +44,17 @@ CREATE TABLE reservation_jobs (
 ALTER TABLE events ADD CONSTRAINT events_ref_venue_id FOREIGN KEY (venue_id) REFERENCES venues (id) ON DELETE NO ACTION;
 ALTER TABLE reservation_jobs ADD CONSTRAINT reservation_jobs_ref_reservation_id FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE CASCADE;
 ALTER TABLE reservations ADD CONSTRAINT reservations_ref_event_id FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE NO ACTION;
+
+
+CREATE TABLE events_revisions ( revision SERIAL NOT NULL) INHERITS (events);
+
+CREATE OR REPLACE FUNCTION table_update() RETURNS TRIGGER AS $table_update$
+    BEGIN
+        INSERT INTO events_revisions SELECT NEW.*;
+        RETURN NEW;
+    END;
+$table_update$ LANGUAGE plpgsql;
+
+CREATE TRIGGER table_update
+AFTER INSERT OR UPDATE ON events
+    FOR EACH ROW EXECUTE PROCEDURE table_update();
