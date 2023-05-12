@@ -18,9 +18,13 @@ wrapContainerVerticalSpacing elements =
 
 wrapContainerVerticalSpacingTiny :: Html -> Html
 wrapContainerVerticalSpacingTiny element =
-    case element of
+    let
+        filteredElements =
+            filterEmptyElements elements
+    in
+    case filteredElements of
         Empty _ -> [hsx||]
-        _ -> [hsx|<div class="flex flex-col gap-y-2">{element}</div>|]
+        _ -> [hsx|<div class="flex flex-col gap-y-2">{forEach filteredElements (\element -> element)}</div>|]
 
 
 filterEmptyElements :: [Html5.Html] -> [Html5.Html]
