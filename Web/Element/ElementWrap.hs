@@ -16,14 +16,14 @@ wrapContainerVerticalSpacing elements =
 
 
 
-wrapContainerVerticalSpacingTiny :: Html -> Html
-wrapContainerVerticalSpacingTiny element =
+wrapContainerVerticalSpacingTiny :: [Html5.Html] -> Html
+wrapContainerVerticalSpacingTiny elements =
     let
         filteredElements =
             filterEmptyElements elements
     in
     case filteredElements of
-        Empty _ -> [hsx||]
+        [] -> [hsx||]
         _ -> [hsx|<div class="flex flex-col gap-y-2">{forEach filteredElements (\element -> element)}</div>|]
 
 
