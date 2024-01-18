@@ -9,14 +9,12 @@
 1. After following the steps to install [IHP](https://ihp.digitallyinduced.com/Guide/installation.html), you can run this app locally by running:
 
 ```bash
-./start
+direnv allow
+devenv up
 ```
 
 2. In another tab execute `make tailwind-dev` to compile the CSS.
 3. On a third tab you can execute `MailHog`, and watch the emails under http://0.0.0.0:8025/
-
-
-
 
 ## Test
 
