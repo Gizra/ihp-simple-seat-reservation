@@ -81,7 +81,7 @@ instance View ShowView where
 
 mailhogHelp :: Text -> Html
 mailhogHelp baseUrl
-    | "http://localhost" `isInfixOf` baseUrl = [hsx|We think you run this instance locally, so you would need to manually install and run Mailhog, and then you can access it via <a class="underline" href="http://0.0.0.0:8025" target="_blank">http://0.0.0.0:8025</a>.|]
+    | "http://localhost" `isInfixOf` baseUrl = [hsx|We think you run this instance locally, so Mailhog is already running, and you can access it via <a class="underline" href="http://0.0.0.0:8025" target="_blank">http://0.0.0.0:8025</a>.|]
     | "https://8000-" `isInfixOf` baseUrl= mailhogGitpod $ replace "https://8000-" "https://8025-" baseUrl
     | otherwise = [hsx|We couldn't detect if you are running this instance locally or on GitPod.io, so we don't know where Mailhog is running.|]
     where
