@@ -24,6 +24,9 @@
                         nodejs
                         # For testing concurrent requests.
                         parallel
+
+                        # Used for local development
+                        mailhog
                     ];
                     haskellPackages = p: with p; [
                         # Haskell dependencies go here
@@ -34,6 +37,11 @@
                         text
                         hlint
                     ];
+                };
+
+                # Start mailhog by default.
+                devenv.shells.default = {
+                    services.mailhog.enable = true;
                 };
             };
 
